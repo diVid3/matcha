@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" type="text/css" href="landing.css">
+  <script defer src="landing.js"></script>
+  <title>Landing</title>
+</head>
+<body>
+  
+  <header>
+    <nav>
+
+    </nav>
+  </header>
+
+  <main>
+
+    <div class="form-container">
+      <div class="form-body">
+        <form id="login-form" class="login-form" method="post" action="/" enctype="application/x-www-form-urlencoded">
+          <h2>Login</h2>
+          <input id="login-email" class="login-form-block" type="email" name="email" placeholder="Email">
+          <input id="login-password" class="login-form-block" type="password" name="password" placeholder="Password">
+          <button class="login-form-button" type="submit">Login</button>
+          <p>Not a member? <u class="login-form-signup">Sign up here</u></p>
+        </form>
+
+        <form id="register-form" class="register-form" method="post" action="/" enctype="application/x-www-form-urlencoded">
+          <input id="register-first-name" class="register-form-block" type="text" name="first-name" placeholder="First Name">
+          <input id="register-last-name" class="register-form-block" type="text" name="last-name" placeholder="Last Name">
+          <input id="register-username" class="register-form-block" type="text" name="username" placeholder="Username">
+          <input id="register-age" class="register-form-block" type="text" name="age" placeholder="Age">
+          <input id="register-email" class="register-form-block" type="email" name="email" placeholder="Email">
+          <input id="register-password" class="register-form-block" type="password" name="password" placeholder="Password">
+            <div class="register-form-block">
+              <input id="register-male" type="radio" name="gender" value="0" checked="checked">
+              <label for="register-male">Male</label>
+              <input id="register-female" type="radio" name="gender" value="1">
+              <label for="register-female">Female</label>
+            </div>
+          <button class="register-form-button" type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+
+  </footer>
+
+</body>
+</html>

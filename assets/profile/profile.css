@@ -1,0 +1,12 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Roboto', sans-serif;
+}
+
+:root {
+  --shadow: #480104;
+  --midtone: #BC7B83;
+  --highlight: #F5F1EC;
+  --accent: #7BBCB4;
+}

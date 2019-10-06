@@ -1,8 +1,7 @@
-const testWare = (req, res, next) => {
-  console.log('testWare middleware fired!')
-  next()
-}
+const userLoggedIn = require('./userLoggedIn');
+const userNotLoggedIn = require('./userNotLoggedIn');
 
 module.exports = {
-  testWare
-}
+  userLoggedIn,
+  userNotLoggedIn
+};
