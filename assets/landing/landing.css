@@ -9,6 +9,7 @@
   --midtone: #656469;
   --midtone-dark: #515055;
   --highlight: #CED4D8;
+  --highlight-light: rgb(231, 234, 236);
   --accent: #8E30BD;
   --accent-other: rgb(174, 37, 179);
 }
@@ -44,12 +45,6 @@ ul {
   transform: translate(-50%, -50%);
 }
 
-.form-tab-container {
-  background-color: var(--midtone-dark);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
 .login-form h2 {
   text-align: center;
   margin-bottom: 25px;
@@ -64,14 +59,8 @@ ul {
   font-size: 15px;
 }
 
-.login-form .login-form-signup {
+.login-form .login-form-register {
   cursor: pointer;
-}
-
-.form-tab-container li:first-child:hover {
-  cursor: pointer;
-  border-top-left-radius: 5px;
-  background-color: var(--midtone);
 }
 
 .login-form-block {
@@ -90,11 +79,94 @@ ul {
   border-radius: 5px;
   font-size: 20px;
   padding: 5px;
-  color: var(--highlight);
+  color: var(--highlight-light);
   background-color: var(--accent);
   margin-bottom: 25px;
 }
 
-.register-form {
+.hide-form {
   display: none;
+}
+
+.register-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--midtone-dark);
+  font-size: 35px;
+}
+
+.register-form-block {
+  display: block;
+  margin-bottom: 25px;
+  padding: 5px;
+  font-size: 15px;
+  border: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.register-form-radio-buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.register-form-radio-buttons label {
+  color: var(--midtone-dark);
+}
+
+.register-form-button {
+  width: 100%;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 20px;
+  padding: 5px;
+  color: var(--highlight-light);
+  background-color: var(--accent);
+  margin-bottom: 25px;
+}
+
+.register-form p {
+  color: var(--midtone);
+  text-align: center;
+  width: 100%;
+  font-size: 15px;
+}
+
+.register-form .register-form-login {
+  cursor: pointer;
+}
+
+.group-radio-label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+@media only screen and (max-height: 587px) {
+  .register-form h2 {
+    margin-bottom: 15px;
+  }
+  .register-form-block {
+    margin-bottom: 15px;
+  }
+  .register-form-button {
+    margin-bottom: 15px;
+  }
+}
+
+@media only screen and (min-width: 485px) {
+  .register-form-block {
+    width: 300px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .register-form-block {
+    width: 400px;
+  }
 }

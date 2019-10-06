@@ -25,23 +25,34 @@
           <input id="login-email" class="login-form-block" type="email" name="email" placeholder="Email">
           <input id="login-password" class="login-form-block" type="password" name="password" placeholder="Password">
           <button class="login-form-button" type="submit">Login</button>
-          <p>Not a member? <u class="login-form-signup">Sign up here</u></p>
+          <p>Not a member? <u class="login-form-register">Register here</u></p>
         </form>
 
-        <form id="register-form" class="register-form" method="post" action="/" enctype="application/x-www-form-urlencoded">
-          <input id="register-first-name" class="register-form-block" type="text" name="first-name" placeholder="First Name">
-          <input id="register-last-name" class="register-form-block" type="text" name="last-name" placeholder="Last Name">
-          <input id="register-username" class="register-form-block" type="text" name="username" placeholder="Username">
-          <input id="register-age" class="register-form-block" type="text" name="age" placeholder="Age">
-          <input id="register-email" class="register-form-block" type="email" name="email" placeholder="Email">
-          <input id="register-password" class="register-form-block" type="password" name="password" placeholder="Password">
-            <div class="register-form-block">
-              <input id="register-male" type="radio" name="gender" value="0" checked="checked">
-              <label for="register-male">Male</label>
-              <input id="register-female" type="radio" name="gender" value="1">
-              <label for="register-female">Female</label>
-            </div>
+        <form id="register-form" class="register-form hide-form" method="post" action="/" enctype="application/x-www-form-urlencoded">
+          <h2>Register</h2>
+            <input id="register-first-name" class="register-form-block" type="text" name="first-name" placeholder="First Name">
+            <input id="register-last-name" class="register-form-block" type="text" name="last-name" placeholder="Last Name">
+            <input id="register-username" class="register-form-block" type="text" name="username" placeholder="Username">
+            <input id="register-age" class="register-form-block" type="text" name="age" placeholder="Age">
+            <input id="register-email" class="register-form-block" type="email" name="email" placeholder="Email">
+            <input id="register-password" class="register-form-block" type="password" name="password" placeholder="Password">
+            <input id="register-password-confirm" class="register-form-block" type="password" name="password" placeholder="Confirm Password">
+              <div class="register-form-block register-form-radio-buttons">
+                <div class="group-radio-label">
+                  <input id="register-male" type="radio" name="gender" value="0" checked="checked">
+                  <label for="register-male">Male</label>
+                </div>
+                <div class="group-radio-label">
+                  <input id="register-female" type="radio" name="gender" value="1">
+                  <label for="register-female">Female</label>
+                </div>
+                <div class="group-radio-label">
+                  <input id="register-other" type="radio" name="gender" value="2">
+                  <label for="register-other">Other</label>
+                </div>
+              </div>
           <button class="register-form-button" type="submit">Register</button>
+          <p>Already registered? <u class="register-form-login">Log in here</u></p>
         </form>
       </div>
     </div>
