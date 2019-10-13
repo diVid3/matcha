@@ -1,7 +1,7 @@
-const userLoggedIn = require('./userLoggedIn');
-const userNotLoggedIn = require('./userNotLoggedIn');
+const redirectAuthenticated = require('./redirectAuthenticated');
+const redirectNotAuthenticated = require('./redirectNotAuthenticated');
 
 module.exports = {
-  userLoggedIn,
-  userNotLoggedIn
+  redirectAuthenticated,
+  redirectNotAuthenticated
 };

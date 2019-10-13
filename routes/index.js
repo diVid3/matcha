@@ -2,22 +2,25 @@ const express = require('express');
 const router = express.Router();
 
 const {
-  userLoggedIn,
-  userNotLoggedIn
+  redirectAuthenticated,
+  redirectNotAuthenticated
 } = require('../middleware');
 
 const {
-  LandingController,
-  RegisterController,
-  LoginController,
-  ProfileController
+  UsersController,
+  AuthenticationController
 } = require('../controllers');
 
-router.get('/landing', userLoggedIn, LandingController.get);
-router.post('/register', RegisterController.post);
-router.post('/login', LoginController.post);
+// Authentication
+router.post('/api/v1.0/login', redirectAuthenticated, AuthenticationController.login);
+router.post('/api/v1.0/logout', redirectNotAuthenticated, AuthenticationController.logout);
 
-router.get('/profile', userNotLoggedIn, ProfileController.get);
-router.post('/profile', userNotLoggedIn, ProfileController.post);
+// Users resource
+router.get('/api/v1.0/users', redirectNotAuthenticated, UsersController.getAllUsers);
+router.post('/api/v1.0/users', redirectNotAuthenticated, UsersController.createUser);
+
+router.get('/api/v1.0/users/:id', redirectNotAuthenticated, UsersController.getUser);
+router.delete('/api/v1.0/users/:id', redirectNotAuthenticated, UsersController.deleteUser);
+router.patch('/api/v1.0/users/:id', redirectNotAuthenticated, UsersController.patchUser);
 
 module.exports = router;

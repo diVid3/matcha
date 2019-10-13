@@ -1,10 +1,12 @@
 const SQLCon = require('../config/SQLCon');
 
-class UserModel {
+// TODO: Reset AWS RDS Cert.
+
+class UsersModel {
 
   static getAllUsers() {
     
   }
 }
 
-module.exports = UserModel;
+module.exports = UsersModel;
