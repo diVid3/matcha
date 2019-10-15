@@ -23,7 +23,8 @@ router.post('/api/v1.0/send-reset-email/:email', redirectAuthenticated, Authenti
 router.get('/api/v1.0/users', redirectNotAuthenticated, UsersController.getAllUsers);
 router.post('/api/v1.0/users', redirectNotAuthenticated, UsersController.createUser);
 
-router.get('/api/v1.0/users/:id', redirectNotAuthenticated, UsersController.getUser);
+router.get('/api/v1.0/users/id/:id', redirectNotAuthenticated, UsersController.getUserByID);
+router.get('/api/v1.0/users/username/:username', redirectNotAuthenticated, UsersController.getUserByUsername);
 router.delete('/api/v1.0/users/:id', redirectNotAuthenticated, UsersController.deleteUser);
 router.patch('/api/v1.0/users/:id', redirectNotAuthenticated, UsersController.patchUser); // TODO: Use this to reset pass.
 

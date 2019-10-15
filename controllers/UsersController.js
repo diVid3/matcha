@@ -10,11 +10,32 @@ class UsersController {
 
   static createUser(req, res) {
 
-    res.json({success: true})
+    UsersModel.createUser(req.body)
+    .then(() => {
+
+      res.sendStatus(204);
+    })
+    .catch(() => {
+      
+      res.sendStatus(400);
+    });
   }
 
-  static getUser(req, res) {
+  static getUserByID(req, res) {
 
+    // TODO: Finish this.
+    
+    // res.json({ USER INFO })
+  }
+  
+  static getUserByUsername(req, res) {
+    
+    // TODO: Check if user exists before a client can register.
+    console.log(req.params)
+
+    // const obj = UsersModel.
+
+    // res.json({ USER INFO })
   }
 
   static patchUser(req, res) {
@@ -23,17 +44,6 @@ class UsersController {
 
   static deleteUser(req, res) {
 
-  }
-
-  static get(req, res) {
-
-    // TODO: Send user state.
-  }
-  static post(req, res) {
-
-    // TODO: create new user.
-    
-    // If valid, respond with 200 OK
   }
 }
 

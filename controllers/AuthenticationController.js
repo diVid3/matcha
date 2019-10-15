@@ -54,18 +54,19 @@ class AuthenticationController {
       !req.body.verifyToken
     ) {
 
-      res.status(400).send('Missing or invalid uuid and / or email');
+      res.sendStatus(400);
       return
     }
 
     const email = req.body.email;
     const uuid = req.body.verifyToken;
+    const username = req.body.username;
 
     transporter.sendMail({
       from: 'no-reply@matcha.localhost',
       to: `${email}`,
       subject: 'Verify Registration | Matcha',
-      text: 'Welcome to matcha!\n\n' +
+      text: `Hi ${username}, welcome to matcha!\n\n` +
       
       'To complete your registration please click on the following link:\n\n' +
       `${Config.backend}/api/v1.0/verify-registration/${uuid}\n\n` +
@@ -73,15 +74,14 @@ class AuthenticationController {
       'The link will remain active for 24 hours.'
     }, (err, info) => {
 
-      console.log(err)
-
       if (err) {
-        res.status(500).send('Oops something went wrong... Please try again later...');
+        
+        res.sendStatus(500);
       }
       else {
 
         // TODO: Set time-out clean up for DB. Use model.
-        res.json({success: true});
+        res.sendStatus(204);
       }
     });
   }
