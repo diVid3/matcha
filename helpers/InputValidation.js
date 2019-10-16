@@ -1,3 +1,5 @@
+const uuidv4Checker = require('uuidv4').default;
+
 class InputValidation {
 
   static isValidName(name) {
@@ -76,6 +78,10 @@ class InputValidation {
     }
 
     return true;
+  }
+
+  static isValidUuid(uuid) {
+    return uuidv4Checker.is(uuid);
   }
 }
 

@@ -10,16 +10,13 @@ class UsersModel {
 
       if (!InputValidation.isValidRegistrationData(data)) {
   
-        rej(true);
+        rej(400);
       }
       
       // To validate use: bcrypt.compareSync(myPlaintextPassword, hash);
       const hashedPassword = bcrypt.hashSync(data.password, 10);
-
       const con = SQLCon.getCon();
-
       const sql = 'INSERT INTO `matcha`.`users` SET ?';
-
       const set = {
         first_name: data.firstName,
         last_name: data.lastName,
@@ -37,11 +34,11 @@ class UsersModel {
         verified: data.verified - 0
       }
 
-      con.query(sql, set, (err, results, fields) => {
+      con.query(sql, set, (err, rows, fields) => {
         
         if (err) {
 
-          rej(true);
+          rej(500);
         }
 
         res(true);

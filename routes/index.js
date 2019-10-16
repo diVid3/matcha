@@ -14,8 +14,8 @@ const {
 // Authentication / Verification
 router.post('/api/v1.0/login', redirectAuthenticated, AuthenticationController.login);
 router.post('/api/v1.0/logout', redirectNotAuthenticated, AuthenticationController.logout);
-router.get('/api/v1.0/verify-registration/:uuid', redirectAuthenticated, AuthenticationController.verifyReg);
-router.get('/api/v1.0/verify-reset/:uuid', redirectAuthenticated, AuthenticationController.verifyReset);
+router.post('/api/v1.0/verify-registration', redirectAuthenticated, AuthenticationController.verifyReg);
+router.post('/api/v1.0/verify-reset', redirectAuthenticated, AuthenticationController.verifyReset);
 router.post('/api/v1.0/send-registration-email', redirectAuthenticated, AuthenticationController.sendRegEmail)
 router.post('/api/v1.0/send-reset-email/:email', redirectAuthenticated, AuthenticationController.sendResetEmail)
 

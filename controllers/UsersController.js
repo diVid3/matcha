@@ -15,9 +15,22 @@ class UsersController {
 
       res.sendStatus(204);
     })
-    .catch(() => {
+    .catch((statusCode) => {
       
-      res.sendStatus(400);
+      let codeToReplyWith = 500;
+
+      switch (statusCode) {
+        case 400:
+          codeToReplyWith = 400
+          break;
+        case 500:
+          codeToReplyWith = 500
+          break;
+        default:
+          break;
+      }
+      
+      res.sendStatus(codeToReplyWith);
     });
   }
 
