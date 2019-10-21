@@ -1,0 +1,77 @@
+The backend error codes are as follows:
+
+HTTP 400-USER:
+
+  400-USER-1: Missing firstName.
+  400-USER-2: Missing lastName.
+  400-USER-3: Missing gender.
+  400-USER-4: Missing biography.
+  400-USER-5: Missing username.
+  400-USER-6: Missing email.
+  400-USER-7: Missing password.
+  400-USER-8: Missing fameRating.
+  400-USER-9: Missing latitude.
+  400-USER-10: Missing longitude.
+  400-USER-11: Missing lastSeen.
+  400-USER-12: Missing age.
+  400-USER-13: Missing verifyToken.
+  400-USER-14: Missing verified.
+
+  400-USER-15: Malformed firstName.
+  400-USER-16: Malformed lastName.
+  400-USER-17: Malformed gender.
+  400-USER-18: Malformed biography.
+  400-USER-19: Malformed username.
+  400-USER-20: Malformed email.
+  400-USER-21: Malformed password.
+  400-USER-22: Malformed fameRating.
+  400-USER-23: Malformed latitude.
+  400-USER-24: Malformed longitude.
+  400-USER-25: Malformed lastSeen.
+  400-USER-26: Malformed age.
+  400-USER-27: Age out of range.
+  400-USER-28: Malformed verifyToken.
+  400-USER-29: Malformed verified.
+
+  400-USER-30: firstName should be a string.
+  400-USER-31: lastName should be a string.
+  400-USER-32: gender should be a string.
+  400-USER-33: biography should be a string.
+  400-USER-34: username should be a string.
+  400-USER-35: email should be a string.
+  400-USER-36: password should be a string.
+  400-USER-37: FameRating should be a string.
+  400-USER-38: fatitude should be a string.
+  400-USER-39: longitude should be a string.
+  400-USER-40: lastSeen should be a string.
+  400-USER-41: age should be a string.
+  400-USER-42: verify token should be a string.
+  400-USER-43: verified should be a string.
+
+  400-USER-44: Email non-existent.
+  400-USER-45: Username exists.
+
+  400-USER-46: Missing resetToken.
+  400-USER-47: Malformed resetToken.
+  400-USER-48: resetToken should be a string.
+
+  400-USER-49: Missing profilePicPath.
+  400-USER-50: Malformed profilePicPath.
+  400-USER-51: profilePicPath should be a string.
+
+HTTP 500-USER:
+
+  500-USER-1: DB inserting new user failed.
+  500-USER-2: DB setting verfied failed.
+  500-USER-3: DB nulling verfyToken failed.
+  500-USER-4: DB couldn't verify the user.
+  500-USER-5: DB getting user by email failed.
+  500-USER-6: DB updating user by email failed.
+
+HTTP 500-SEND-REG-EMAIL:
+
+  500-SEND-REG-EMAIL-1: Nodemailer couldn't send registration email.
+
+HTTP 500-SEND-RESET-EMAIL:
+
+  500-SEND-RESET-EMAIL-1: Nodemailer couldn't send reset email.

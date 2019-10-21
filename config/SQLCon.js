@@ -1,11 +1,12 @@
-const mysql = require('mysql');
+const mysql = require('mysql')
 
 // Private Singleton.
 const con = mysql.createConnection({
-  'host': 'matcha.cfsc0xmh8tva.eu-west-2.rds.amazonaws.com',
-  'user': 'admin',
-  'password': '#Fadora123'
-});
+  host: 'matcha.cfsc0xmh8tva.eu-west-2.rds.amazonaws.com',
+  user: 'admin',
+  password: '#Fadora123',
+  multipleStatements: true
+})
 
 class SQLCon {
 
@@ -14,17 +15,17 @@ class SQLCon {
     return new Promise((resolve, reject) => {
       con.connect((err) => {  
         if (err) {
-          reject(err);
+          reject(err)
         }
-        resolve('Connected to AWS RDS.');
-      });
-    });
+        resolve('Connected to AWS RDS.')
+      })
+    })
   }
 
   static getCon() {
 
-    return con;
+    return con
   }
 }
 
-module.exports = SQLCon;
+module.exports = SQLCon

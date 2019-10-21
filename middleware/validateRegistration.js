@@ -6,7 +6,7 @@ const validateRegistration = (req, res, next) => {
 
   
 
-  next();
-};
+  next()
+}
 
-module.exports = validateRegistration;
+module.exports = validateRegistration

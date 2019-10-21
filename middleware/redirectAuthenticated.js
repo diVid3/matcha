@@ -1,9 +1,9 @@
 const redirectAuthenticated = (req, res, next) => {
-  console.log('Client is authenticated, redirecting!');
+  console.log('Client is authenticated, redirecting!')
 
   // TODO: Respond with a redirect to /profile
 
-  next();
-};
+  next()
+}
 
-module.exports = redirectAuthenticated;
+module.exports = redirectAuthenticated

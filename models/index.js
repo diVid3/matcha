@@ -1,7 +1,5 @@
-const UsersModel = require('./UsersModel');
-const AuthenticationModel = require('./AuthenticationModel');
+const UsersModel = require('./UsersModel')
 
 module.exports = {
-  UsersModel,
-  AuthenticationModel
-};
+  UsersModel
+}

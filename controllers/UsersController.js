@@ -1,63 +1,84 @@
 const {
   UsersModel
-} = require('../models');
+} = require('../models')
 
 class UsersController {
 
   static getAllUsers(req, res) {
+
 
   }
 
   static createUser(req, res) {
 
     UsersModel.createUser(req.body)
-    .then(() => {
-
-      res.sendStatus(204);
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
-    .catch((statusCode) => {
-      
-      let codeToReplyWith = 500;
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
 
-      switch (statusCode) {
-        case 400:
-          codeToReplyWith = 400
-          break;
-        case 500:
-          codeToReplyWith = 500
-          break;
-        default:
-          break;
-      }
-      
-      res.sendStatus(codeToReplyWith);
-    });
+  static verifyUserRegistration(req, res) {
+
+    UsersModel.verifyUserRegistration(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
+
+  static verifyUserPassReset(req, res) {
+
+    // This will be used to validate the uuid coming from the front-end
+    // to enable the user to reset their password, the uuid should have a match
+    // in the DB.
+    //
+    // This is called after the email is sent, but before the PATCH request.
   }
 
   static getUserByID(req, res) {
 
-    // TODO: Finish this.
-    
-    // res.json({ USER INFO })
+
+  }
+
+  static getUserByEmail(req, res) {
+
+    req.body = {
+      email: req.params.email
+    }
+
+    UsersModel.getUserByEmail(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
   
   static getUserByUsername(req, res) {
-    
-    // TODO: Check if user exists before a client can register.
-    console.log(req.params)
 
-    // const obj = UsersModel.
-
-    // res.json({ USER INFO })
-  }
-
-  static patchUser(req, res) {
 
   }
 
-  static deleteUser(req, res) {
+  static patchUserByID(req, res) {
+
+
+  }
+
+  static patchUserByEmail(req, res) {
+
+
+  }
+
+  static patchUserByUsername(req, res) {
+
 
   }
 }
 
-module.exports = UsersController;
+module.exports = UsersController

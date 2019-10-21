@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/.bin/eslint . || true",
-    "lint-init": "./node_modules/.bin/eslint --init || true"
+    "lint-init": "./node_modules/.bin/eslint --init || true",
+    "lint-fix": "./node_modules/.bin/eslint --fix . || true"
   },
   "repository": {
     "type": "git",
