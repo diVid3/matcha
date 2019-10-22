@@ -2,512 +2,465 @@ const InputValidation = require('../InputValidation')
 
 class UsersValidator {
 
-  static getErrors(data, errors, checkToExec) {
-
-    if (
-      typeof data !== 'object' ||
-      !(errors instanceof Array) ||
-      typeof checkToExec !== 'string' ||
-      !checkToExec.length
-    ) {
-      throw new Error('Invalid getErrors input.')
+  static firstNamePresent(data, errors) {
+    if (!data.firstName) {
+      errors.push({ code: '400-USER-1', message: 'Missing firstName.' })
     }
-    
-    if (
-      checkToExec !== 'firstNamePresent' &&
-      checkToExec !== 'firstNameType' &&
-      checkToExec !== 'firstNameRegex' &&
-      checkToExec !== 'lastNamePresent' &&
-      checkToExec !== 'lastNameType' &&
-      checkToExec !== 'lastNameRegex' &&
-      checkToExec !== 'genderPresent' &&
-      checkToExec !== 'genderType' &&
-      checkToExec !== 'genderRegex' &&
-      checkToExec !== 'biographyPresent' &&
-      checkToExec !== 'biographyType' &&
-      checkToExec !== 'biographyRegex' &&
-      checkToExec !== 'usernamePresent' &&
-      checkToExec !== 'usernameType' &&
-      checkToExec !== 'usernameRegex' &&
-      checkToExec !== 'emailPresent' &&
-      checkToExec !== 'emailType' &&
-      checkToExec !== 'emailRegex' &&
-      checkToExec !== 'passwordPresent' &&
-      checkToExec !== 'passwordType' &&
-      checkToExec !== 'passwordRegex' &&
-      checkToExec !== 'fameRatingPresent' &&
-      checkToExec !== 'fameRatingType' &&
-      checkToExec !== 'fameRatingRegex' &&
-      checkToExec !== 'latitudePresent' &&
-      checkToExec !== 'latitudeType' &&
-      checkToExec !== 'latitudeRegex' &&
-      checkToExec !== 'longitudePresent' &&
-      checkToExec !== 'longitudeType' &&
-      checkToExec !== 'longitudeRegex' &&
-      checkToExec !== 'lastSeenPresent' &&
-      checkToExec !== 'lastSeenType' &&
-      checkToExec !== 'lastSeenRegex' &&
-      checkToExec !== 'agePresent' &&
-      checkToExec !== 'ageType' &&
-      checkToExec !== 'ageRegex' &&
-      checkToExec !== 'ageRange' &&
-      checkToExec !== 'resetTokenPresent' &&
-      checkToExec !== 'resetTokenType' &&
-      checkToExec !== 'resetTokenRegex' &&
-      checkToExec !== 'verifyTokenPresent' &&
-      checkToExec !== 'verifyTokenType' &&
-      checkToExec !== 'verifyTokenRegex' &&
-      checkToExec !== 'verifiedPresent' &&
-      checkToExec !== 'verifiedType' &&
-      checkToExec !== 'verifiedRegex' &&
-      checkToExec !== 'profilePicPathPresent' &&
-      checkToExec !== 'profilePicPathType' &&
-      checkToExec !== 'profilePicPathRegex'
-    ) {
-      throw new Error(`${checkToExec} ins't a valid check to perform.`)
-    }
+  }
 
-    const checkObj = {
-      'firstNamePresent': () => {
-        if (!data.firstName) {
-          errors.push({ code: '400-USER-1', message: 'Missing firstName.' })
-        }
-      },
-      'firstNameType': () => {
-        if (typeof data.firstName !== 'string') {
-          errors.push({ code: '400-USER-30', message: 'firstName should be a string.' })
-        }
-      },
-      'firstNameRegex': () => {
-        if (typeof data.firstName === 'string' && !InputValidation.isValidName(data.firstName)) {
-          errors.push({ code: '400-USER-15', message: 'Malformed firstName.' })
-        }
-      },
-      'lastNamePresent': () => {
-        if (!data.lastName) {
-          errors.push({ code: '400-USER-2', message: 'Missing lastName.' })
-        }
-      },
-      'lastNameType': () => {
-        if (typeof data.lastName !== 'string') {
-          errors.push({ code: '400-USER-31', message: 'lastName should be a string.' })
-        }
-      },
-      'lastNameRegex': () => {
-        if (typeof data.lastName === 'string' && !InputValidation.isValidName(data.lastName)) {
-          errors.push({ code: '400-USER-16', message: 'Malformed lastName.' })
-        }
-      },
-      'genderPresent': () => {
-        if (!data.gender) {
-          errors.push({ code: '400-USER-3', message: 'Missing gender.' })
-        }
-      },
-      'genderType': () => {
-        if (typeof data.gender !== 'string') {
-          errors.push({ code: '400-USER-32', message: 'gender should be a string.' })
-        }
-      },
-      'genderRegex': () => {
-        if (typeof data.gender === 'string' && !InputValidation.isValidGender(data.gender)) {
-          errors.push({ code: '400-USER-17', message: 'Malformed gender.' })
-        }
-      },
-      'biographyPresent': () => {
-        if (!data.biography) {
-          errors.push({ code: '400-USER-4', message: 'Missing biography.' })
-        }
-      },
-      'biographyType': () => {
-        if (typeof data.biography !== 'string') {
-          errors.push({ code: '400-USER-33', message: 'biography should be a string.' })
-        }
-      },
-      'biographyRegex': () => {
-        if (typeof data.biography === 'string' && !InputValidation.isValidBiography(data.biography)) {
-          errors.push({ code: '400-USER-18', message: 'Malformed biography.' })
-        }
-      },
-      'usernamePresent': () => {
-        if (!data.username) {
-          errors.push({ code: '400-USER-5', message: 'Missing username.' })
-        }
-      },
-      'usernameType': () => {
-        if (typeof data.username !== 'string') {
-          errors.push({ code: '400-USER-34', message: 'username should be a string.' })
-        }
-      },
-      'usernameRegex': () => {
-        if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
-          errors.push({ code: '400-USER-19', message: 'Malformed username.' })
-        }
-      },
-      'emailPresent': () => {
-        if (!data.email) {
-          errors.push({ code: '400-USER-6', message: 'Missing email.' })
-        }
-      },
-      'emailType': () => {
-        if (typeof data.email !== 'string') {
-          errors.push({ code: '400-USER-35', message: 'email should be a string.' })
-        }
-      },
-      'emailRegex': () => {
-        if (typeof data.email === 'string' && !InputValidation.isValidEmail(data.email)) {
-          errors.push({ code: '400-USER-20', message: 'Malformed email.' })
-        }
-      },
-      'passwordPresent': () => {
-        if (!data.password) {
-          errors.push({ code: '400-USER-7', message: 'Missing password.' })
-        }
-      },
-      'passwordType': () => {
-        if (typeof data.password !== 'string') {
-          errors.push({ code: '400-USER-36', message: 'password should be a string.' })
-        }
-      },
-      'passwordRegex': () => {
-        if (typeof data.password === 'string' && !InputValidation.isValidPassword(data.password)) {
-          errors.push({ code: '400-USER-21', message: 'Malformed password.' })
-        }
-      },
-      'fameRatingPresent': () => {
-        if (!data.fameRating) {
-          errors.push({ code: '400-USER-8', message: 'Missing fameRating.' })
-        }
-      },
-      'fameRatingType': () => {
-        if (typeof data.fameRating !== 'string') {
-          errors.push({ code: '400-USER-37', message: 'fameRating should be a string.' })
-        }
-      },
-      'fameRatingRegex': () => {
-        if (typeof data.fameRating === 'string' && !InputValidation.isValidFameRating(data.fameRating)) {
-          errors.push({ code: '400-USER-22', message: 'Malformed fameRating.' })
-        }
-      },
-      'latitudePresent': () => {
-        if (!data.latitude) {
-          errors.push({ code: '400-USER-9', message: 'Missing latitude.' })
-        }
-      },
-      'latitudeType': () => {
-        if (typeof data.latitude !== 'string') {
-          errors.push({ code: '400-USER-38', message: 'latitude should be a string.' })
-        }
-      },
-      'latitudeRegex': () => {
-        if (typeof data.latitude === 'string' && !InputValidation.isValidLatLong(data.latitude)) {
-          errors.push({ code: '400-USER-23', message: 'Malformed latitude.' })
-        }
-      },
-      'longitudePresent': () => {
-        if (!data.longitude) {
-          errors.push({ code: '400-USER-10', message: 'Missing longitude.' })
-        }
-      },
-      'longitudeType': () => {
-        if (typeof data.longitude !== 'string') {
-          errors.push({ code: '400-USER-39', message: 'longitude should be a string.' })
-        }
-      },
-      'longitudeRegex': () => {
-        if (typeof data.longitude === 'string' && !InputValidation.isValidLatLong(data.longitude)) {
-          errors.push({ code: '400-USER-24', message: 'Malformed longitude.' })
-        }
-      },
-      'lastSeenPresent': () => {
-        if (!data.lastSeen) {
-          errors.push({ code: '400-USER-11', message: 'Missing lastSeen.' })
-        }
-      },
-      'lastSeenType': () => {
-        if (typeof data.lastSeen !== 'string') {
-          errors.push({ code: '400-USER-40', message: 'lastSeen should be a string.' })
-        }
-      },
-      'lastSeenRegex': () => {
-        if (typeof data.lastSeen === 'string' && !InputValidation.isValidLastSeen(data.lastSeen)) {
-          errors.push({ code: '400-USER-25', message: 'Malformed lastSeen.' })
-        }
-      },
-      'agePresent': () => {
-        if (!data.age) {
-          errors.push({ code: '400-USER-12', message: 'Missing age.' })
-        }
-      },
-      'ageType': () => {
-        if (typeof data.age !== 'string') {
-          errors.push({ code: '400-USER-41', message: 'age should be a string.' })
-        }
-      },
-      'ageRegex': () => {
-        if (typeof data.age === 'string' && !InputValidation.isValidAgeChars(data.age)) {
-          errors.push({ code: '400-USER-26', message: 'Malformed age.' })
-        }
-      },
-      'ageRange': () => {
-        if (typeof data.age === 'string' && !InputValidation.isValidAge(data.age)) {
-          errors.push({ code: '400-USER-27', message: 'Age out of range.' })
-        }
-      },
-      'resetTokenPresent': () => {
-        if (!data.resetToken) {
-          errors.push({ code: '400-USER-46', message: 'Missing resetToken.' })
-        }
-      },
-      'resetTokenType': () => {
-        if (typeof data.resetToken !== 'string') {
-          errors.push({ code: '400-USER-48', message: 'resetToken should be a string.' })
-        }
-      },
-      'resetTokenRegex': () => {
-        if (typeof data.resetToken === 'string' && !InputValidation.isValidUuid(data.resetToken)) {
-          errors.push({ code: '400-USER-47', message: 'Malformed resetToken.' })
-        }
-      },
-      'verifyTokenPresent': () => {
-        if (!data.verifyToken) {
-          errors.push({ code: '400-USER-13', message: 'Missing verifyToken.' })
-        }
-      },
-      'verifyTokenType': () => {
-        if (typeof data.verifyToken !== 'string') {
-          errors.push({ code: '400-USER-42', message: 'verify token should be a string.' })
-        }
-      },
-      'verifyTokenRegex': () => {
-        if (typeof data.verifyToken === 'string' && !InputValidation.isValidUuid(data.verifyToken)) {
-          errors.push({ code: '400-USER-28', message: 'Malformed verifyToken.' })
-        }
-      },
-      'verifiedPresent': () => {
-        if (!data.verified) {
-          errors.push({ code: '400-USER-14', message: 'Missing verified.' })
-        }
-      },
-      'verifiedType': () => {
-        if (typeof data.verified !== 'string') {
-          errors.push({ code: '400-USER-43', message: 'verified should be a string.' })
-        }
-      },
-      'verifiedRegex': () => {
-        if (typeof data.verified === 'string' && !InputValidation.isValidVerified(data.verified)) {
-          errors.push({ code: '400-USER-29', message: 'Malformed verified.' })
-        }
-      },
-      'profilePicPathPresent': () => {
-        if (!data.profilePicPath) {
-          errors.push({ code: '400-USER-49', message: 'Missing profilePicPath.' })
-        }
-      },
-      'profilePicPathType': () => {
-        if (typeof data.profilePicPath !== 'string') {
-          errors.push({ code: '400-USER-51', message: 'profilePicPath should be a string.' })
-        }
-      },
-      'profilePicPathRegex': () => {
-        if (typeof data.profilePicPath === 'string' && !InputValidation.isValidFilePath(data.profilePicPath)) {
-          errors.push({ code: '400-USER-50', message: 'Malformed profilePicPath.' })
-        }
-      }
+  static firstNameType(data, errors) {
+    if (typeof data.firstName !== 'string') {
+      errors.push({ code: '400-USER-30', message: 'firstName should be a string.' })
+    }
+  }
+
+  static firstNameRegex(data, errors) {
+    if (typeof data.firstName === 'string' && !InputValidation.isValidName(data.firstName)) {
+      errors.push({ code: '400-USER-15', message: 'Malformed firstName.' })
+    }
+  }
+
+  static lastNamePresent(data, errors) {
+    if (!data.lastName) {
+      errors.push({ code: '400-USER-2', message: 'Missing lastName.' })
+    }
+  }
+
+  static lastNameType(data, errors) {
+    if (typeof data.lastName !== 'string') {
+      errors.push({ code: '400-USER-31', message: 'lastName should be a string.' })
+    }
+  }
+
+  static lastNameRegex(data, errors) {
+    if (typeof data.lastName === 'string' && !InputValidation.isValidName(data.lastName)) {
+      errors.push({ code: '400-USER-16', message: 'Malformed lastName.' })
+    }
+  }
+
+  static genderPresent(data, errors) {
+    if (!data.gender) {
+      errors.push({ code: '400-USER-3', message: 'Missing gender.' })
+    }
+  }
+
+  static genderType(data, errors) {
+    if (typeof data.gender !== 'string') {
+      errors.push({ code: '400-USER-32', message: 'gender should be a string.' })
+    }
+  }
+
+  static genderRegex(data, errors) {
+    if (typeof data.gender === 'string' && !InputValidation.isValidGender(data.gender)) {
+      errors.push({ code: '400-USER-17', message: 'Malformed gender.' })
+    }
+  }
+
+  static biographyPresent(data, errors) {
+    if (!data.biography) {
+      errors.push({ code: '400-USER-4', message: 'Missing biography.' })
+    }
+  }
+
+  static biographyType(data, errors) {
+    if (typeof data.biography !== 'string') {
+      errors.push({ code: '400-USER-33', message: 'biography should be a string.' })
+    }
+  }
+
+  static biographyRegex(data, errors) {
+    if (typeof data.biography === 'string' && !InputValidation.isValidBiography(data.biography)) {
+      errors.push({ code: '400-USER-18', message: 'Malformed biography.' })
+    }
+  }
+
+  static usernamePresent(data, errors) {
+    if (!data.username) {
+      errors.push({ code: '400-USER-5', message: 'Missing username.' })
+    }
+  }
+
+  static usernameType(data, errors) {
+    if (typeof data.username !== 'string') {
+      errors.push({ code: '400-USER-34', message: 'username should be a string.' })
+    }
+  }
+
+  static usernameRegex(data, errors) {
+    if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
+      errors.push({ code: '400-USER-19', message: 'Malformed username.' })
+    }
+  }
+
+  static emailPresent(data, errors) {
+    if (!data.email) {
+      errors.push({ code: '400-USER-6', message: 'Missing email.' })
+    }
+  }
+
+  static emailType(data, errors) {
+    if (typeof data.email !== 'string') {
+      errors.push({ code: '400-USER-35', message: 'email should be a string.' })
+    }
+  }
+
+  static emailRegex(data, errors) {
+    if (typeof data.email === 'string' && !InputValidation.isValidEmail(data.email)) {
+      errors.push({ code: '400-USER-20', message: 'Malformed email.' })
+    }
+  }
+
+  static passwordPresent(data, errors) {
+    if (!data.password) {
+      errors.push({ code: '400-USER-7', message: 'Missing password.' })
+    }
+  }
+
+  static passwordType(data, errors) {
+    if (typeof data.password !== 'string') {
+      errors.push({ code: '400-USER-36', message: 'password should be a string.' })
+    }
+  }
+
+  static passwordRegex(data, errors) {
+    if (typeof data.password === 'string' && !InputValidation.isValidPassword(data.password)) {
+      errors.push({ code: '400-USER-21', message: 'Malformed password.' })
+    }
+  }
+
+  static fameRatingPresent(data, errors) {
+    if (!data.fameRating) {
+      errors.push({ code: '400-USER-8', message: 'Missing fameRating.' })
+    }
+  }
+
+  static fameRatingType(data, errors) {
+    if (typeof data.fameRating !== 'string') {
+      errors.push({ code: '400-USER-37', message: 'fameRating should be a string.' })
+    }
+  }
+
+  static fameRatingRegex(data, errors) {
+    if (typeof data.fameRating === 'string' && !InputValidation.isValidFameRating(data.fameRating)) {
+      errors.push({ code: '400-USER-22', message: 'Malformed fameRating.' })
+    }
+  }
+
+  static latitudePresent(data, errors) {
+    if (!data.latitude) {
+      errors.push({ code: '400-USER-9', message: 'Missing latitude.' })
+    }
+  }
+
+  static latitudeType(data, errors) {
+    if (typeof data.latitude !== 'string') {
+      errors.push({ code: '400-USER-38', message: 'latitude should be a string.' })
+    }
+  }
+
+  static latitudeRegex(data, errors) {
+    if (typeof data.latitude === 'string' && !InputValidation.isValidLatLong(data.latitude)) {
+      errors.push({ code: '400-USER-23', message: 'Malformed latitude.' })
+    }
+  }
+
+  static longitudePresent(data, errors) {
+    if (!data.longitude) {
+      errors.push({ code: '400-USER-10', message: 'Missing longitude.' })
+    }
+  }
+
+  static longitudeType(data, errors) {
+    if (typeof data.longitude !== 'string') {
+      errors.push({ code: '400-USER-39', message: 'longitude should be a string.' })
+    }
+  }
+
+  static longitudeRegex(data, errors) {
+    if (typeof data.longitude === 'string' && !InputValidation.isValidLatLong(data.longitude)) {
+      errors.push({ code: '400-USER-24', message: 'Malformed longitude.' })
+    }
+  }
+
+  static lastSeenPresent(data, errors) {
+    if (!data.lastSeen) {
+      errors.push({ code: '400-USER-11', message: 'Missing lastSeen.' })
+    }
+  }
+
+  static lastSeenType(data, errors) {
+    if (typeof data.lastSeen !== 'string') {
+      errors.push({ code: '400-USER-40', message: 'lastSeen should be a string.' })
+    }
+  }
+
+  static lastSeenRegex(data, errors) {
+    if (typeof data.lastSeen === 'string' && !InputValidation.isValidLastSeen(data.lastSeen)) {
+      errors.push({ code: '400-USER-25', message: 'Malformed lastSeen.' })
+    }
+  }
+
+  static agePresent(data, errors) {
+    if (!data.age) {
+      errors.push({ code: '400-USER-12', message: 'Missing age.' })
+    }
+  }
+
+  static ageType(data, errors) {
+    if (typeof data.age !== 'string') {
+      errors.push({ code: '400-USER-41', message: 'age should be a string.' })
+    }
+  }
+
+  static ageRegex(data, errors) {
+    if (typeof data.age === 'string' && !InputValidation.isValidAgeChars(data.age)) {
+      errors.push({ code: '400-USER-26', message: 'Malformed age.' })
+    }
+  }
+
+  static ageRange(data, errors) {
+    if (typeof data.age === 'string' && !InputValidation.isValidAge(data.age)) {
+      errors.push({ code: '400-USER-27', message: 'Age out of range.' })
+    }
+  }
+
+  static resetTokenPresent(data, errors) {
+    if (!data.resetToken) {
+      errors.push({ code: '400-USER-46', message: 'Missing resetToken.' })
+    }
+  }
+
+  static resetTokenType(data, errors) {
+    if (typeof data.resetToken !== 'string') {
+      errors.push({ code: '400-USER-48', message: 'resetToken should be a string.' })
+    }
+  }
+
+  static resetTokenRegex(data, errors) {
+    if (typeof data.resetToken === 'string' && !InputValidation.isValidUuid(data.resetToken)) {
+      errors.push({ code: '400-USER-47', message: 'Malformed resetToken.' })
+    }
+  }
+
+  static verifyTokenPresent(data, errors) {
+    if (!data.verifyToken) {
+      errors.push({ code: '400-USER-13', message: 'Missing verifyToken.' })
+    }
+  }
+
+  static verifyTokenType(data, errors) {
+    if (typeof data.verifyToken !== 'string') {
+      errors.push({ code: '400-USER-42', message: 'verifyToken should be a string.' })
+    }
+  }
+
+  static verifyTokenRegex(data, errors) {
+    if (typeof data.verifyToken === 'string' && !InputValidation.isValidUuid(data.verifyToken)) {
+      errors.push({ code: '400-USER-28', message: 'Malformed verifyToken.' })
+    }
+  }
+
+  static verifiedPresent(data, errors) {
+    if (!data.verified) {
+      errors.push({ code: '400-USER-14', message: 'Missing verified.' })
+    }
+  }
+
+  static verifiedType(data, errors) {
+    if (typeof data.verified !== 'string') {
+      errors.push({ code: '400-USER-43', message: 'verified should be a string.' })
+    }
+  }
+
+  static verifiedRegex(data, errors) {
+    if (typeof data.verified === 'string' && !InputValidation.isValidVerified(data.verified)) {
+      errors.push({ code: '400-USER-29', message: 'Malformed verified.' })
+    }
+  }
+
+  static profilePicPathPresent(data, errors) {
+    if (!data.profilePicPath) {
+      errors.push({ code: '400-USER-49', message: 'Missing profilePicPath.' })
+    }
+  }
+
+  static profilePicPathType(data, errors) {
+    if (typeof data.profilePicPath !== 'string') {
+      errors.push({ code: '400-USER-51', message: 'profilePicPath should be a string.' })
+    }
+  }
+
+  static profilePicPathRegex(data, errors) {
+    if (typeof data.profilePicPath === 'string' && !InputValidation.isValidFilePath(data.profilePicPath)) {
+      errors.push({ code: '400-USER-50', message: 'Malformed profilePicPath.' })
     }
   }
 
   static getUserErrors(data, errors) {
-    
-    // TODO: Call checks here.
+
+    UsersValidator.firstNamePresent(data, errors)
+    UsersValidator.firstNameType(data, errors)
+    UsersValidator.firstNameRegex(data, errors)
+    UsersValidator.lastNamePresent(data, errors)
+    UsersValidator.lastNameType(data, errors)
+    UsersValidator.lastNameRegex(data, errors)
+    UsersValidator.genderPresent(data, errors)
+    UsersValidator.genderType(data, errors)
+    UsersValidator.genderRegex(data, errors)
+    UsersValidator.biographyPresent(data, errors)
+    UsersValidator.biographyType(data, errors)
+    UsersValidator.biographyRegex(data, errors)
+    UsersValidator.usernamePresent(data, errors)
+    UsersValidator.usernameType(data, errors)
+    UsersValidator.usernameRegex(data, errors)
+    UsersValidator.emailPresent(data, errors)
+    UsersValidator.emailType(data, errors)
+    UsersValidator.emailRegex(data, errors)
+    UsersValidator.passwordPresent(data, errors)
+    UsersValidator.passwordType(data, errors)
+    UsersValidator.passwordRegex(data, errors)
+    UsersValidator.fameRatingPresent(data, errors)
+    UsersValidator.fameRatingType(data, errors)
+    UsersValidator.fameRatingRegex(data, errors)
+    UsersValidator.latitudePresent(data, errors)
+    UsersValidator.latitudeType(data, errors)
+    UsersValidator.latitudeRegex(data, errors)
+    UsersValidator.longitudePresent(data, errors)
+    UsersValidator.longitudeType(data, errors)
+    UsersValidator.longitudeRegex(data, errors)
+    UsersValidator.lastSeenPresent(data, errors)
+    UsersValidator.lastSeenType(data, errors)
+    UsersValidator.lastSeenRegex(data, errors)
+    UsersValidator.agePresent(data, errors)
+    UsersValidator.ageType(data, errors)
+    UsersValidator.ageRegex(data, errors)
+    UsersValidator.ageRange(data, errors)
+    UsersValidator.verifyTokenPresent(data, errors)
+    UsersValidator.verifyTokenType(data, errors)
+    UsersValidator.verifyTokenRegex(data, errors)
+    UsersValidator.verifiedPresent(data, errors)
+    UsersValidator.verifiedType(data, errors)
+    UsersValidator.verifiedRegex(data, errors)
   }
 
   static getOnlyUsernameErrors(data, errors) {
 
-    // if (!data.username) {
-    //   errors.push({ code: '400-USER-5', message: 'Missing username.' })
-    // }
-
-    // if (typeof data.username !== 'string') {
-    //   errors.push({ code: '400-USER-34', message: 'Username should be a string.' })
-    // }
-
-    // if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
-    //   errors.push({ code: '400-USER-19', message: 'Malformed username.' })
-    // }
+    UsersValidator.usernamePresent(data, errors)
+    UsersValidator.usernameType(data, errors)
+    UsersValidator.usernameRegex(data, errors)
   }
 
   static getOnlyEmailErrors(data, errors) {
 
-    // if (!data.email) {
-    //   errors.push({ code: '400-USER-6', message: 'Missing email.' })
-    // }
-
-    // if (typeof data.email !== 'string') {
-    //   errors.push({ code: '400-USER-35', message: 'Email should be a string.' })
-    // }
-
-    // if (typeof data.email === 'string' && !InputValidation.isValidEmail(data.email)) {
-    //   errors.push({ code: '400-USER-20', message: 'Malformed email.' })
-    // }
+    UsersValidator.emailPresent(data, errors)
+    UsersValidator.emailType(data, errors)
+    UsersValidator.emailRegex(data, errors)
   }
 
   static getOnlyVerifyTokenErrors(data, errors) {
 
-    // if (!data.verifyToken) {
-    //   errors.push({ code: '400-USER-13', message: 'Missing verifyToken.' })
-    // }
-
-    // if (typeof data.verifyToken !== 'string') {
-    //   errors.push({ code: '400-USER-42', message: 'Verify token should be a string.' })
-    // }
-
-    // if (typeof data.verifyToken === 'string' && !InputValidation.isValidUuid(data.verifyToken)) {
-    //   errors.push({ code: '400-USER-28', message: 'Malformed verifyToken.' })
-    // }
+    UsersValidator.verifyTokenPresent(data, errors)
+    UsersValidator.verifyTokenType(data, errors)
+    UsersValidator.verifyTokenRegex(data, errors)
   }
 
   static getPatchUserErrors(data, errors) {
 
     if (data.firstName) {
-      if (typeof data.firstName !== 'string') {
-        errors.push({ code: '400-USER-30', message: 'FirstName should be a string.' })
-      }
-      if (typeof data.firstName === 'string' && !InputValidation.isValidName(data.firstName)) {
-        errors.push({ code: '400-USER-15', message: 'Malformed firstName.' })
-      }
+      UsersValidator.firstNamePresent(data, errors)
+      UsersValidator.firstNameType(data, errors)
+      UsersValidator.firstNameRegex(data, errors)
     }
 
     if (data.lastName) {
-      if (typeof data.lastName !== 'string') {
-        errors.push({ code: '400-USER-31', message: 'LastName should be a string.' })
-      }
-      if (typeof data.lastName === 'string' && !InputValidation.isValidName(data.lastName)) {
-        errors.push({ code: '400-USER-16', message: 'Malformed lastName.' })
-      }
+      UsersValidator.lastNamePresent(data, errors)
+      UsersValidator.lastNameType(data, errors)
+      UsersValidator.lastNameRegex(data, errors)
     }
 
     if (data.gender) {
-      if (typeof data.gender !== 'string') {
-        errors.push({ code: '400-USER-32', message: 'Gender should be a string.' })
-      }
-      if (typeof data.gender === 'string' && !InputValidation.isValidGender(data.gender)) {
-        errors.push({ code: '400-USER-17', message: 'Malformed gender.' })
-      }
+      UsersValidator.genderPresent(data, errors)
+      UsersValidator.genderType(data, errors)
+      UsersValidator.genderRegex(data, errors)
     }
 
     if (data.biography) {
-      if (typeof data.biography !== 'string') {
-        errors.push({ code: '400-USER-33', message: 'Biography should be a string.' })
-      }
-      if (typeof data.biography === 'string' && !InputValidation.isValidBiography(data.biography)) {
-        errors.push({ code: '400-USER-18', message: 'Malformed biography.' })
-      }
+      UsersValidator.biographyPresent(data, errors)
+      UsersValidator.biographyType(data, errors)
+      UsersValidator.biographyRegex(data, errors)
     }
 
     if (data.username) {
-      if (typeof data.username !== 'string') {
-        errors.push({ code: '400-USER-34', message: 'Username should be a string.' })
-      }
-      if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
-        errors.push({ code: '400-USER-19', message: 'Malformed username.' })
-      }
+      UsersValidator.usernamePresent(data, errors)
+      UsersValidator.usernameType(data, errors)
+      UsersValidator.usernameRegex(data, errors)
     }
 
     if (data.email) {
-      if (typeof data.email !== 'string') {
-        errors.push({ code: '400-USER-35', message: 'Email should be a string.' })
-      }
-      if (typeof data.email === 'string' && !InputValidation.isValidEmail(data.email)) {
-        errors.push({ code: '400-USER-20', message: 'Malformed email.' })
-      }
+      UsersValidator.emailPresent(data, errors)
+      UsersValidator.emailType(data, errors)
+      UsersValidator.emailRegex(data, errors)
     }
 
     if (data.password) {
-      if (typeof data.password !== 'string') {
-        errors.push({ code: '400-USER-36', message: 'Password should be a string.' })
-      }
-      if (typeof data.password === 'string' && !InputValidation.isValidPassword(data.password)) {
-        errors.push({ code: '400-USER-21', message: 'Malformed password.' })
-      }
+      UsersValidator.passwordPresent(data, errors)
+      UsersValidator.passwordType(data, errors)
+      UsersValidator.passwordRegex(data, errors)
     }
 
     if (data.fameRating) {
-      if (typeof data.fameRating !== 'string') {
-        errors.push({ code: '400-USER-37', message: 'FameRating should be a string.' })
-      }
-      if (typeof data.fameRating === 'string' && !InputValidation.isValidFameRating(data.fameRating)) {
-        errors.push({ code: '400-USER-22', message: 'Malformed fameRating.' })
-      }
+      UsersValidator.fameRatingPresent(data, errors)
+      UsersValidator.fameRatingType(data, errors)
+      UsersValidator.fameRatingRegex(data, errors)
     }
 
     if (data.latitude) {
-      if (typeof data.latitude !== 'string') {
-        errors.push({ code: '400-USER-38', message: 'Latitude should be a string.' })
-      }
-      if (typeof data.latitude === 'string' && !InputValidation.isValidLatLong(data.latitude)) {
-        errors.push({ code: '400-USER-23', message: 'Malformed latitude.' })
-      }
+      UsersValidator.latitudePresent(data, errors)
+      UsersValidator.latitudeType(data, errors)
+      UsersValidator.latitudeRegex(data, errors)
     }
 
     if (data.longitude) {
-      if (typeof data.longitude !== 'string') {
-        errors.push({ code: '400-USER-39', message: 'Longitude should be a string.' })
-      }
-      if (typeof data.longitude === 'string' && !InputValidation.isValidLatLong(data.longitude)) {
-        errors.push({ code: '400-USER-24', message: 'Malformed longitude.' })
-      }
+      UsersValidator.longitudePresent(data, errors)
+      UsersValidator.longitudeType(data, errors)
+      UsersValidator.longitudeRegex(data, errors)
     }
 
     if (data.lastSeen) {
-      if (typeof data.lastSeen !== 'string') {
-        errors.push({ code: '400-USER-40', message: 'LastSeen should be a string.' })
-      }
-      if (typeof data.lastSeen === 'string' && !InputValidation.isValidLastSeen(data.lastSeen)) {
-        errors.push({ code: '400-USER-25', message: 'Malformed lastSeen.' })
-      }
+      UsersValidator.lastSeenPresent(data, errors)
+      UsersValidator.lastSeenType(data, errors)
+      UsersValidator.lastSeenRegex(data, errors)
     }
 
     if (data.age) {
-      if (typeof data.age !== 'string') {
-        errors.push({ code: '400-USER-41', message: 'Age should be a string.' })
-      }
-      if (typeof data.age === 'string' && !InputValidation.isValidAgeChars(data.age)) {
-        errors.push({ code: '400-USER-26', message: 'Malformed age.' })
-      }
-      if (typeof data.age === 'string' && !InputValidation.isValidAge(data.age)) {
-        errors.push({ code: '400-USER-27', message: 'Out of age range.' })
-      }
-    }
-
-    if (data.verifyToken) {
-      if (typeof data.verifyToken !== 'string') {
-        errors.push({ code: '400-USER-42', message: 'verifyToken should be a string.' })
-      }
-      if (typeof data.verifyToken === 'string' && !InputValidation.isValidUuid(data.verifyToken)) {
-        errors.push({ code: '400-USER-28', message: 'Malformed verifyToken.' })
-      }
+      UsersValidator.agePresent(data, errors)
+      UsersValidator.ageType(data, errors)
+      UsersValidator.ageRegex(data, errors)
+      UsersValidator.ageRange(data, errors)
     }
 
     if (data.resetToken) {
+      UsersValidator.resetTokenPresent(data, errors)
+      UsersValidator.resetTokenType(data, errors)
+      UsersValidator.resetTokenRegex(data, errors)
+    }
 
-
+    if (data.verifyToken) {
+      UsersValidator.verifyTokenPresent(data, errors)
+      UsersValidator.verifyTokenType(data, errors)
+      UsersValidator.verifyTokenRegex(data, errors)
     }
 
     if (data.verified) {
-      if (typeof data.verified !== 'string') {
-        errors.push({ code: '400-USER-43', message: 'Verified should be a string.' })
-      }
-      if (typeof data.verified === 'string' && !InputValidation.isValidVerified(data.verified)) {
-        errors.push({ code: '400-USER-29', message: 'Malformed verified.' })
-      }
+      UsersValidator.verifiedPresent(data, errors)
+      UsersValidator.verifiedType(data, errors)
+      UsersValidator.verifiedRegex(data, errors)
     }
 
     if (data.profilePicPath) {
-
-
-
-      // 400-USER-50: Malformed profilePicPath.
-      // 400-USER-51: Profile pic path should be a string.
+      UsersValidator.profilePicPathPresent(data, errors)
+      UsersValidator.profilePicPathType(data, errors)
+      UsersValidator.profilePicPathRegex(data, errors)
     }
   }
 }
