@@ -367,98 +367,82 @@ class UsersValidator {
   static getPatchUserErrors(data, errors) {
 
     if (data.firstName) {
-      UsersValidator.firstNamePresent(data, errors)
       UsersValidator.firstNameType(data, errors)
       UsersValidator.firstNameRegex(data, errors)
     }
 
     if (data.lastName) {
-      UsersValidator.lastNamePresent(data, errors)
       UsersValidator.lastNameType(data, errors)
       UsersValidator.lastNameRegex(data, errors)
     }
 
     if (data.gender) {
-      UsersValidator.genderPresent(data, errors)
       UsersValidator.genderType(data, errors)
       UsersValidator.genderRegex(data, errors)
     }
 
     if (data.biography) {
-      UsersValidator.biographyPresent(data, errors)
       UsersValidator.biographyType(data, errors)
       UsersValidator.biographyRegex(data, errors)
     }
 
     if (data.username) {
-      UsersValidator.usernamePresent(data, errors)
       UsersValidator.usernameType(data, errors)
       UsersValidator.usernameRegex(data, errors)
     }
 
     if (data.email) {
-      UsersValidator.emailPresent(data, errors)
       UsersValidator.emailType(data, errors)
       UsersValidator.emailRegex(data, errors)
     }
 
     if (data.password) {
-      UsersValidator.passwordPresent(data, errors)
       UsersValidator.passwordType(data, errors)
       UsersValidator.passwordRegex(data, errors)
     }
 
     if (data.fameRating) {
-      UsersValidator.fameRatingPresent(data, errors)
       UsersValidator.fameRatingType(data, errors)
       UsersValidator.fameRatingRegex(data, errors)
     }
 
     if (data.latitude) {
-      UsersValidator.latitudePresent(data, errors)
       UsersValidator.latitudeType(data, errors)
       UsersValidator.latitudeRegex(data, errors)
     }
 
     if (data.longitude) {
-      UsersValidator.longitudePresent(data, errors)
       UsersValidator.longitudeType(data, errors)
       UsersValidator.longitudeRegex(data, errors)
     }
 
     if (data.lastSeen) {
-      UsersValidator.lastSeenPresent(data, errors)
       UsersValidator.lastSeenType(data, errors)
       UsersValidator.lastSeenRegex(data, errors)
     }
 
     if (data.age) {
-      UsersValidator.agePresent(data, errors)
       UsersValidator.ageType(data, errors)
       UsersValidator.ageRegex(data, errors)
       UsersValidator.ageRange(data, errors)
     }
 
     if (data.resetToken) {
-      UsersValidator.resetTokenPresent(data, errors)
       UsersValidator.resetTokenType(data, errors)
       UsersValidator.resetTokenRegex(data, errors)
     }
 
     if (data.verifyToken) {
-      UsersValidator.verifyTokenPresent(data, errors)
       UsersValidator.verifyTokenType(data, errors)
       UsersValidator.verifyTokenRegex(data, errors)
     }
 
     if (data.verified) {
-      UsersValidator.verifiedPresent(data, errors)
       UsersValidator.verifiedType(data, errors)
       UsersValidator.verifiedRegex(data, errors)
     }
 
     if (data.profilePicPath) {
-      UsersValidator.profilePicPathPresent(data, errors)
       UsersValidator.profilePicPathType(data, errors)
       UsersValidator.profilePicPathRegex(data, errors)
     }
