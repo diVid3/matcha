@@ -152,7 +152,7 @@ class UsersModel {
       const body = {}
       const errors = []
 
-      UsersValidator.getUserErrors(data, errors)
+      UsersValidator.getPatchUserByEmailErrors(data, errors)
 
       if (errors.length) {
         body.errors = errors
@@ -161,22 +161,25 @@ class UsersModel {
 
       const con = SQLCon.getCon()
       const sql = 'UPDATE`matcha`.`users` SET ? WHERE `email` = ?'
-      const set = {
-        first_name: data.firstName,
-        last_name: data.lastName,
-        gender: data.gender - 0,
-        biography: data.biography,
-        username: data.username,
-        email: data.email,
-        password: hashedPassword,
-        fame_rating: data.fameRating - 0,
-        latitude: data.latitude,
-        longitude: data.longitude,
-        last_seen: data.lastSeen - 0,
-        age: data.age - 0,
-        verify_token: data.verifyToken,
-        verified: data.verified - 0
-      }
+
+      const set = {}
+
+      data.firstName ? (set.first_name = data.firstName) : undefined
+      data.lastName ? (set.last_name = data.lastName) : undefined
+      data.gender ? (set.gender = data.gender) : undefined
+      data.biography ? (set.biography = data.biography) : undefined
+      data.username ? (set.username = data.username) : undefined
+      data.email ? (set.email = data.email) : undefined
+      data.password ? (set.password = data.password) : undefined
+      data.fameRating ? (set.fame_rating = data.fameRating - 0) : undefined
+      data.latitude ? (set.latitude = data.latitude) : undefined
+      data.longitude ? (set.longitude = data.longitude) : undefined
+      data.lastSeen ? (set.last_seen = data.lastSeen - 0) : undefined
+      data.age ? (set.age = data.age - 0) : undefined
+      data.resetToken ? (set.reset_token = data.resetToken) : undefined
+      data.verifyToken ? (set.verify_token = data.verifyToken) : undefined
+      data.verified ? (set.verified = data.verified - 0) : undefined
+      data.profilePicPath ? (set.profile_pic_path = data.profilePicPath) : undefined
 
       con.query(sql, [set, data.email], (err, rows, fields) => {
         

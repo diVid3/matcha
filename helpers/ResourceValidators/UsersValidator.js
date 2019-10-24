@@ -364,7 +364,11 @@ class UsersValidator {
     UsersValidator.verifyTokenRegex(data, errors)
   }
 
-  static getPatchUserErrors(data, errors) {
+  static getPatchUserByEmailErrors(data, errors) {
+
+    if (!data.email) {
+      return UsersValidator.emailPresent(data, errors)
+    }
 
     if (data.firstName) {
       UsersValidator.firstNameType(data, errors)

@@ -65,60 +65,52 @@ class AuthenticationController {
     })
   }
 
+  // TODO: This will be used to check if the user is a registered user by email, if so,
+  // This will contact the UsersModel to save a uuid to that user account and send an email
+  // to the related user with that same uuid, to later when they click it, to allow them to
+  // reset their password on the front-end, after which another request will be made to PATCH
+  // the user's password to the new password.
+  //
+  // If the user wasn't registered before, this will reject.
+  
   static sendResetEmail(req, res) {
-
-    // TODO: This will be used to check if the user is a registered user by email, if so,
-    // This will contact the UsersModel to save a uuid to that user account and send an email
-    // to the related user with that same uuid, to later when they click it, to allow them to
-    // reset their password on the front-end, after which another request will be made to PATCH
-    // the user's password to the new password.
-    //
-    // If the user wasn't registered before, this will reject.
-
-    const data = req.body
-
-    const body = {}
-    const errors = []
-
-    UsersValidator.getOnlyEmailErrors(data, errors)
-
-    if (errors.length) {
-      body.errors = errors
-      return res.status(400).json(body)
-    }
 
     const resetToken = uuidv4()
 
-    console.log(resetToken)
+    req.body.resetToken = resetToken
 
-    // TODO: If the email exists, generate uuid here and pass it to patchUserByEmail.
-    // UsersModel.
+    UsersModel.patchUserByEmail(req.body)
+    .then((statusObj) => {
 
-    // transporter.sendMail({
-    //   from: 'no-reply@matcha.localhost',
-    //   to: `${data.email}`,
-    //   subject: 'Reset Password | Matcha',
-    //   text: `Hi there,\n\n` +
-      
-    //   'You recently requested to reset your password, you can do so by clicking on the following link:\n\n' +
-    //   `${Config.frontend}/?reset=${data.uuid}\n\n` +
-      
-    //   'The link will remain active for 24 hours.'
-    // }, (err, info) => {
-
-    //   if (err) {
-    //     errors.push({ code: '500-SEND-RESET-EMAIL-1', message: 'Nodemailer couldn\'t send reset email.' })
-    //     body.errors = errors
-    //     return res.status(500).json(body)
-    //   }
-
-    //   else {
-
-    //     // TODO: Set time-out clean up for DB. Use UsersModel nullify reset_token.
-
-    //     res.status(200).json(body)
-    //   }
-    // })
+      transporter.sendMail({
+        from: 'no-reply@matcha.localhost',
+        to: `${data.email}`,
+        subject: 'Reset Password | Matcha',
+        text: `Hi there,\n\n` +
+        
+        'You recently requested to reset your password, you can do so by clicking on the following link:\n\n' +
+        `${Config.frontend}/?reset=${data.uuid}\n\n` +
+        
+        'The link will remain active for 24 hours.'
+      }, (err, info) => {
+  
+        if (err) {
+          errors.push({ code: '500-SEND-RESET-EMAIL-1', message: 'Nodemailer couldn\'t send reset email.' })
+          body.errors = errors
+          return res.status(500).json(body)
+        }
+  
+        else {
+  
+          // TODO: Set time-out clean up for DB. Use UsersModel nullify reset_token.
+  
+          res.status(200).json(statusObj.body)
+        }
+      })
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 }
 
