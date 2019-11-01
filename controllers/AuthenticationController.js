@@ -75,8 +75,9 @@ class AuthenticationController {
   
   static sendResetEmail(req, res) {
 
-    const resetToken = uuidv4()
+    const data = req.body
 
+    const resetToken = uuidv4()
     req.body.resetToken = resetToken
 
     UsersModel.patchUserByEmail(req.body)
@@ -89,7 +90,7 @@ class AuthenticationController {
         text: `Hi there,\n\n` +
         
         'You recently requested to reset your password, you can do so by clicking on the following link:\n\n' +
-        `${Config.frontend}/?reset=${data.uuid}\n\n` +
+        `${Config.frontend}/?reset=${data.resetToken}\n\n` +
         
         'The link will remain active for 24 hours.'
       }, (err, info) => {
@@ -99,7 +100,6 @@ class AuthenticationController {
           body.errors = errors
           return res.status(500).json(body)
         }
-  
         else {
   
           // TODO: Set time-out clean up for DB. Use UsersModel nullify reset_token.

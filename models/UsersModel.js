@@ -86,11 +86,6 @@ class UsersModel {
     })
   }
 
-  static verifyUserPassReset(data) {
-
-    // TODO: This will receive a claimed uuid from the front-end, verify it or not.
-  }
-
   static getAllUsers() {
 
 
@@ -101,14 +96,43 @@ class UsersModel {
 
   }
 
+  static getUserByResetToken(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      UsersValidator.getOnlyResetTokenErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'SELECT * FROM `matcha`.`users` WHERE `reset_token` = ?;'
+
+      con.query(sql, [data.resetToken], (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-USER-7', message: 'DB getting user by reset-token failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
+  }
+
   static getUserByUsername() {
 
 
   }
 
   static getUserByEmail(data) {
-
-    // TODO: Finish this, will be required by sendResetEmail to check if user exists, it should in order to send.
 
     return new Promise((res, rej) => {
 

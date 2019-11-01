@@ -24,12 +24,13 @@ router.post('/api/v1.0/users', redirectNotAuthenticated, UsersController.createU
 router.get('/api/v1.0/users/id/:id', redirectNotAuthenticated, UsersController.getUserByID)
 router.get('/api/v1.0/users/email/:email', redirectNotAuthenticated, UsersController.getUserByEmail)
 router.get('/api/v1.0/users/username/:username', redirectNotAuthenticated, UsersController.getUserByUsername)
+router.get('/api/v1.0/users/reset-token/:uuid', redirectNotAuthenticated, UsersController.getUserByResetToken)
 
 router.patch('/api/v1.0/users/id/:id', redirectNotAuthenticated, UsersController.patchUserByID)
-router.patch('/api/v1.0/users/email/:email', redirectNotAuthenticated, UsersController.patchUserByEmail)
+router.patch('/api/v1.0/users/email/:email', redirectNotAuthenticated, UsersController.patchUserByEmail) // TODO: Test this by resetting user password.
 router.patch('/api/v1.0/users/username/:username', redirectNotAuthenticated, UsersController.patchUserByUsername)
 
 router.post('/api/v1.0/users/verify-registration', redirectAuthenticated, UsersController.verifyUserRegistration)
-router.post('/api/v1.0/users/verify-reset', redirectAuthenticated, UsersController.verifyUserPassReset)
+// router.post('/api/v1.0/users/verify-reset', redirectAuthenticated, UsersController.verifyUserPassReset)
 
 module.exports = router

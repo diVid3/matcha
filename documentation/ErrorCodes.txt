@@ -67,6 +67,7 @@ HTTP 500-USER:
   500-USER-4: DB couldn't verify the user.
   500-USER-5: DB getting user by email failed.
   500-USER-6: DB updating user by email failed.
+  500-USER-7: DB getting user by reset-token failed.
 
 HTTP 500-SEND-REG-EMAIL:
 

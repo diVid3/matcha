@@ -364,6 +364,13 @@ class UsersValidator {
     UsersValidator.verifyTokenRegex(data, errors)
   }
 
+  static getOnlyResetTokenErrors(data, errors) {
+
+    UsersValidator.resetTokenPresent(data, errors)
+    UsersValidator.resetTokenType(data, errors)
+    UsersValidator.resetTokenRegex(data, errors)
+  }
+
   static getPatchUserByEmailErrors(data, errors) {
 
     if (!data.email) {
