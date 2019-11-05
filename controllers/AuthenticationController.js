@@ -64,14 +64,6 @@ class AuthenticationController {
       }
     })
   }
-
-  // TODO: This will be used to check if the user is a registered user by email, if so,
-  // This will contact the UsersModel to save a uuid to that user account and send an email
-  // to the related user with that same uuid, to later when they click it, to allow them to
-  // reset their password on the front-end, after which another request will be made to PATCH
-  // the user's password to the new password.
-  //
-  // If the user wasn't registered before, this will reject.
   
   static sendResetEmail(req, res) {
 

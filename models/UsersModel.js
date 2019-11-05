@@ -129,7 +129,33 @@ class UsersModel {
 
   static getUserByUsername() {
 
+    return new Promise((res, rej) => {
 
+      const body = {}
+      const errors = []
+
+      UsersValidator.getOnlyUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'SELECT * FROM `matcha`.`users` WHERE `username` = ?;'
+
+      con.query(sql, [data.username], (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-USER-8', message: 'DB getting user by username failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
   }
 
   static getUserByEmail(data) {
@@ -170,7 +196,6 @@ class UsersModel {
 
   static patchUserByEmail(data) {
 
-    // TODO: Patch the user here by the fields provided in the data obj. This will be called by the authentication controller.
     return new Promise((res, rej) => {
 
       const body = {}
@@ -194,16 +219,16 @@ class UsersModel {
       data.biography ? (set.biography = data.biography) : undefined
       data.username ? (set.username = data.username) : undefined
       data.email ? (set.email = data.email) : undefined
-      data.password ? (set.password = data.password) : undefined
+      data.password ? (set.password = bcrypt.hashSync(data.password, 10)) : undefined
       data.fameRating ? (set.fame_rating = data.fameRating - 0) : undefined
       data.latitude ? (set.latitude = data.latitude) : undefined
       data.longitude ? (set.longitude = data.longitude) : undefined
       data.lastSeen ? (set.last_seen = data.lastSeen - 0) : undefined
       data.age ? (set.age = data.age - 0) : undefined
-      data.resetToken ? (set.reset_token = data.resetToken) : undefined
-      data.verifyToken ? (set.verify_token = data.verifyToken) : undefined
+      data.resetToken !== undefined ? (set.reset_token = data.resetToken) : undefined
+      data.verifyToken !== undefined ? (set.verify_token = data.verifyToken) : undefined
       data.verified ? (set.verified = data.verified - 0) : undefined
-      data.profilePicPath ? (set.profile_pic_path = data.profilePicPath) : undefined
+      data.profilePicPath !== undefined ? (set.profile_pic_path = data.profilePicPath) : undefined
 
       con.query(sql, [set, data.email], (err, rows, fields) => {
         

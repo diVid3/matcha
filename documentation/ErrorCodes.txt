@@ -68,6 +68,7 @@ HTTP 500-USER:
   500-USER-5: DB getting user by email failed.
   500-USER-6: DB updating user by email failed.
   500-USER-7: DB getting user by reset-token failed.
+  500-USER-8: DB getting user by username failed.
 
 HTTP 500-SEND-REG-EMAIL:
 

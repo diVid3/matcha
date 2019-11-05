@@ -43,12 +43,6 @@ class UsersController {
 
   static getUserByResetToken(req, res) {
 
-    // This will be used to validate the uuid coming from the front-end
-    // to enable the user to reset their password, the uuid should have a match
-    // in the DB and return that match.
-    //
-    // This is called after the email is sent, but before the PATCH request.
-
     req.body = {
       resetToken: req.params.uuid
     }
@@ -79,7 +73,19 @@ class UsersController {
   
   static getUserByUsername(req, res) {
 
+    console.log(req.body)
 
+    req.body = {
+      username: req.params.username
+    }
+
+    UsersModel.getUserByEmail(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 
   static patchUserByID(req, res) {
@@ -89,7 +95,13 @@ class UsersController {
 
   static patchUserByEmail(req, res) {
 
-    // TODO: Need to call UsersModel here to patch the data by email, method already made.
+    UsersModel.patchUserByEmail(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 
   static patchUserByUsername(req, res) {
