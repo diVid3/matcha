@@ -14,7 +14,8 @@ class AuthenticationController {
 
   static login(req, res) {
 
-
+    console.log(req.session)
+    res.status(200).json({})
   }
 
   static logout(req, res) {

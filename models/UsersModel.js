@@ -127,7 +127,7 @@ class UsersModel {
     })
   }
 
-  static getUserByUsername() {
+  static getUserByUsername(data) {
 
     return new Promise((res, rej) => {
 

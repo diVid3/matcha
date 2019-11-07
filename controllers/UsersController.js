@@ -73,13 +73,11 @@ class UsersController {
   
   static getUserByUsername(req, res) {
 
-    console.log(req.body)
-
     req.body = {
       username: req.params.username
     }
 
-    UsersModel.getUserByEmail(req.body)
+    UsersModel.getUserByUsername(req.body)
     .then((statusObj) => {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
