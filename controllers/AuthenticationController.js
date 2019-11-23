@@ -1,6 +1,8 @@
 const transporter = require('../config/NodemailerCon').getTransporter()
 const Config = new (require('../config/Config'))()
+const CookieConfig = new (require('../config/CookieConfig'))()
 const uuidv4 = require('uuid/v4')
+const bcrypt = require('bcrypt')
 
 const {
   UsersValidator
@@ -14,13 +16,66 @@ class AuthenticationController {
 
   static login(req, res) {
 
-    console.log(req.session)
-    res.status(200).json({})
+    UsersModel.getUserByEmail(req.body)
+    .then((statusObj) => {
+
+      if (statusObj.statusCode !== 200) {
+
+        return res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+      }
+
+      if (!statusObj.body.rows[0]) {
+
+        return res.status(200).json({ status: false, message: 'Invalid credentials.' })
+      }
+
+      const userPassword = statusObj.body.rows[0].password
+
+      if (!bcrypt.compareSync(req.body.password, userPassword)) {
+
+        res.status(200).json({ status: false, message: 'Invalid credentials.' })
+      }
+      else {
+
+        // TODO: Need to patch the user by email, you need to update last_seen.
+        // TODO: Might need to do more queries to aggregate user info like messages etc into the session.
+        
+        req.session.userId = statusObj.body.rows[0].user_id
+        req.session.email = statusObj.body.rows[0].email
+        res
+        .status(200)
+        .cookie('sid', `${req.session.id}`, CookieConfig.cookieOptions)
+        .json({ status: true, message: '' })
+      }
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 
   static logout(req, res) {
 
+    req.session.destroy((err) => {
 
+      if (err) {
+
+        res.status(500).json({ code: '500-DEL-SESS-1', message: 'The session could not be destroyed.' })
+      }
+
+      res.status(200).clearCookie('sid').json({ status: true, message: 'Logged out.' })
+    })
+  }
+
+  static isLoggedIn(req, res) {
+
+    if (req.session.userId) {
+
+      res.status(200).json({ isLoggedIn: true })
+    }
+    else {
+
+      res.status(200).clearCookie('sid').json({ isLoggedIn: false })
+    }
   }
 
   static sendRegEmail(req, res) {

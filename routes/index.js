@@ -17,6 +17,8 @@ router.post('/api/v1.0/logout', redirectNotAuthenticated, AuthenticationControll
 router.post('/api/v1.0/send-registration-email', redirectAuthenticated, AuthenticationController.sendRegEmail)
 router.post('/api/v1.0/send-reset-email', redirectAuthenticated, AuthenticationController.sendResetEmail)
 
+router.get('/api/v1.0/logged-in', redirectNotAuthenticated, AuthenticationController.isLoggedIn)
+
 // Users resource
 router.get('/api/v1.0/users', redirectNotAuthenticated, UsersController.getAllUsers)
 router.post('/api/v1.0/users', redirectNotAuthenticated, UsersController.createUser)

@@ -1,4 +1,11 @@
-The backend error codes are as follows:
+IMPORTANT:
+
+Remember that these are ment to signal conditions to requesting agents, not to give user feedback.
+E.g. don't send a 401 if a user's login credentials are invalid, a 401 means that the requesting
+agent doesn't have the authority to make the request, not that the request contains invalid info.
+
+If you'd like to signal feedback on whether login was successful or not, rather send a 200 feedback
+object in the form of { status: false, message: 'No matching credentials.' }
 
 HTTP 400-USER:
 
@@ -77,3 +84,7 @@ HTTP 500-SEND-REG-EMAIL:
 HTTP 500-SEND-RESET-EMAIL:
 
   500-SEND-RESET-EMAIL-1: Nodemailer couldn't send reset email.
+
+HTTP 500-DEL-SESS:
+
+  500-DEL-SESS-1: The session could not be destroyed.

@@ -22,7 +22,6 @@ class UsersModel {
       }
 
       const con = SQLCon.getCon()
-      // To validate use: bcrypt.compareSync(myPlaintextPassword, hash);
       const hashedPassword = bcrypt.hashSync(data.password, 10)
       const sql = 'INSERT INTO `matcha`.`users` SET ?'
       const set = {
