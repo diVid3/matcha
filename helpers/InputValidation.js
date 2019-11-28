@@ -2,6 +2,10 @@ const uuidv4Checker = require('uuidv4').default
 
 class InputValidation {
 
+  static isValidID(id) {
+    return /^[1-9]+$/.test(id)
+  }
+
   static isValidName(name) {
     return /^\w{1,45}$/.test(name)
   }

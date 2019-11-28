@@ -1,0 +1,9 @@
+HTTP 400-PIC:
+
+  400-PIC-1: Missing ID.
+  400-PIC-2: ID should be a string.
+  400-PIC-3: Malformed ID.
+
+HTTP 500-PIC:
+
+  500-PIC-1: DB getting pictures by user_id failed.

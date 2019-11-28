@@ -38,7 +38,8 @@ class UsersModel {
         last_seen: data.lastSeen - 0,
         age: data.age - 0,
         verify_token: data.verifyToken,
-        verified: data.verified - 0
+        verified: data.verified - 0,
+        sex_pref: 2
       }
 
       con.query(sql, set, (err, rows, fields) => {
@@ -70,7 +71,7 @@ class UsersModel {
 
       const con = SQLCon.getCon()
       const sql = 'UPDATE `matcha`.`users` SET `verified` = 1 WHERE `verify_token` = ?; ' +
-      'matcha`.`users` SET `verify_token` = NULL WHERE `verify_token` = ?;'
+      'UPDATE `matcha`.`users` SET `verify_token` = NULL WHERE `verify_token` = ?;'
 
       con.query(sql, [data.verifyToken, data.verifyToken], (err, rows, fields) => {
 

@@ -1,0 +1,9 @@
+HTTP 400-VIEWER:
+
+  400-VIEWER-1: Missing ID.
+  400-VIEWER-2: ID should be a string.
+  400-VIEWER-3: Malformed ID.
+
+HTTP 500-VIEWER:
+
+  500-VIEWER-1: DB getting viewers by user_id failed.

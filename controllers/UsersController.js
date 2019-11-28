@@ -36,6 +36,21 @@ class UsersController {
 
   }
 
+  static getUserBySession(req, res) {
+
+    req.body = {
+      email: req.session.email
+    }
+
+    UsersModel.getUserByEmail(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
+
   static getUserByID(req, res) {
 
 

@@ -8,7 +8,10 @@ const {
 
 const {
   UsersController,
-  AuthenticationController
+  AuthenticationController,
+  PicturesController,
+  TagsController,
+  ViewersController
 } = require('../controllers')
 
 // Authentication / Verification
@@ -23,6 +26,7 @@ router.get('/api/v1.0/logged-in', redirectNotAuthenticated, AuthenticationContro
 router.get('/api/v1.0/users', redirectNotAuthenticated, UsersController.getAllUsers)
 router.post('/api/v1.0/users', redirectNotAuthenticated, UsersController.createUser)
 
+router.get('/api/v1.0/users/session', redirectNotAuthenticated, UsersController.getUserBySession)
 router.get('/api/v1.0/users/id/:id', redirectNotAuthenticated, UsersController.getUserByID)
 router.get('/api/v1.0/users/email/:email', redirectNotAuthenticated, UsersController.getUserByEmail)
 router.get('/api/v1.0/users/username/:username', redirectNotAuthenticated, UsersController.getUserByUsername)
@@ -34,5 +38,14 @@ router.patch('/api/v1.0/users/username', redirectNotAuthenticated, UsersControll
 
 router.post('/api/v1.0/users/verify-registration', redirectAuthenticated, UsersController.verifyUserRegistration)
 // router.post('/api/v1.0/users/verify-reset', redirectAuthenticated, UsersController.verifyUserPassReset)
+
+// Pictures Resource
+router.get('/api/v1.0/pictures/session', PicturesController.getPicturesBySession)
+
+// Tags Resource
+router.get('/api/v1.0/tags/session', TagsController.getTagsBySession)
+
+// Viewers Resource
+router.get('/api/v1.0/viewers/session', ViewersController.getViewersBySession)
 
 module.exports = router

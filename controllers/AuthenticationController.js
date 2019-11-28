@@ -9,7 +9,10 @@ const {
 } = require('../helpers/ResourceValidators')
 
 const {
-  UsersModel
+  UsersModel,
+  PicturesModel,
+  TagsModel,
+  ViewersModel
 } = require('../models')
 
 class AuthenticationController {
@@ -37,15 +40,23 @@ class AuthenticationController {
       }
       else {
 
-        // TODO: Need to patch the user by email, you need to update last_seen.
-        // TODO: Might need to do more queries to aggregate user info like messages etc into the session.
-        
         req.session.userId = statusObj.body.rows[0].user_id
         req.session.email = statusObj.body.rows[0].email
-        res
-        .status(200)
-        .cookie('sid', `${req.session.id}`, CookieConfig.cookieOptions)
-        .json({ status: true, message: '' })
+
+        UsersModel.patchUserByEmail({
+          email: req.session.email,
+          lastSeen: +new Date() + ''
+        })
+        .then((statusObj) => {
+
+          res
+          .status(200)
+          .cookie('sid', `${req.session.id}`, CookieConfig.cookieOptions)
+          .json({ status: true, message: '' })
+        })
+        .catch((statusObj) => {
+          throw statusObj
+        })
       }
     })
     .catch((statusObj) => {

@@ -1,0 +1,9 @@
+HTTP 400-TAG:
+
+  400-TAG-1: Missing ID.
+  400-TAG-2: ID should be a string.
+  400-TAG-3: Malformed ID.
+
+HTTP 500-TAG:
+
+  500-TAG-1: DB getting tags by user_id failed.
