@@ -215,7 +215,8 @@ class UsersModel {
 
       data.firstName ? (set.first_name = data.firstName) : undefined
       data.lastName ? (set.last_name = data.lastName) : undefined
-      data.gender ? (set.gender = data.gender) : undefined
+      data.gender ? (set.gender = data.gender - 0) : undefined
+      data.sexPref ? (set.sex_pref = data.sexPref - 0) : undefined
       data.biography ? (set.biography = data.biography) : undefined
       data.username ? (set.username = data.username) : undefined
       data.email ? (set.email = data.email) : undefined

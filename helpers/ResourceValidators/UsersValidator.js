@@ -56,6 +56,24 @@ class UsersValidator {
     }
   }
 
+  static sexPrefPreset(data, errors) {
+    if (!data.sexPref) {
+      errors.push({ code: '400-USER-52', message: 'Missing sexPref.' })
+    }
+  }
+
+  static sexPrefType(data, errors) {
+    if (typeof data.sexPref !== 'string') {
+      errors.push({ code: '400-USER-54', message: 'sexPref should be a string.' })
+    }
+  }
+
+  static sexPrefRegex(data, errors) {
+    if (typeof data.gender === 'string' && !InputValidation.isValidSexPref(data.sexPref)) {
+      errors.push({ code: '400-USER-53', message: 'Malformed sexPref.' })
+    }
+  }
+
   static biographyPresent(data, errors) {
     if (!data.biography) {
       errors.push({ code: '400-USER-4', message: 'Missing biography.' })
@@ -390,6 +408,11 @@ class UsersValidator {
     if (data.gender) {
       UsersValidator.genderType(data, errors)
       UsersValidator.genderRegex(data, errors)
+    }
+
+    if (data.sexPref) {
+      UsersValidator.sexPrefType(data, errors)
+      UsersValidator.sexPrefRegex(data, errors)
     }
 
     if (data.biography) {

@@ -14,6 +14,10 @@ class InputValidation {
     return /^[012]$/.test(gender)
   }
 
+  static isValidSexPref(sexPref) {
+    return /^[012]$/.test(sexPref)
+  }
+
   static isValidBiography(bio) {
     return /^.{0,500}$/.test(bio)
   }

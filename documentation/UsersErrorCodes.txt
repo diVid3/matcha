@@ -66,6 +66,10 @@ HTTP 400-USER:
   400-USER-50: Malformed profilePicPath.
   400-USER-51: profilePicPath should be a string.
 
+  400-USER-52: Missing sexPref.
+  400-USER-53: Malformed sexPref.
+  400-USER-54: sexPref should be a string.
+
 HTTP 500-USER:
 
   500-USER-1: DB inserting new user failed.
