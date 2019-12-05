@@ -43,10 +43,12 @@ class AuthenticationController {
         req.session.userId = statusObj.body.rows[0].user_id
         req.session.email = statusObj.body.rows[0].email
 
-        UsersModel.patchUserByEmail({
-          email: req.session.email,
+        // Careful not to use the old .body info below.
+        req.body = {
           lastSeen: +new Date() + ''
-        })
+        }
+
+        UsersModel.patchUserByEmail(req, req.session.email)
         .then((statusObj) => {
 
           res
@@ -139,7 +141,7 @@ class AuthenticationController {
     const resetToken = uuidv4()
     req.body.resetToken = resetToken
 
-    UsersModel.patchUserByEmail(req.body)
+    UsersModel.patchUserByEmail(req, req.body.email)
     .then((statusObj) => {
 
       transporter.sendMail({

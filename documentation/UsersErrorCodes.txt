@@ -70,6 +70,10 @@ HTTP 400-USER:
   400-USER-53: Malformed sexPref.
   400-USER-54: sexPref should be a string.
 
+  400-USER-55: Missing targetEmail.
+  400-USER-56: targetEmail should be a string.
+  400-USER-57: Malformed targetEmail.
+
 HTTP 500-USER:
 
   500-USER-1: DB inserting new user failed.

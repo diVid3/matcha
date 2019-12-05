@@ -128,6 +128,24 @@ class UsersValidator {
     }
   }
 
+  static targetEmailPresent(data, errors) {
+    if (!data.email) {
+      errors.push({ code: '400-USER-55', message: 'Missing targetEmail.' })
+    }
+  }
+
+  static targetEmailType(data, errors) {
+    if (typeof data.email !== 'string') {
+      errors.push({ code: '400-USER-56', message: 'targetEmail should be a string.' })
+    }
+  }
+
+  static targetEmailRegex(data, errors) {
+    if (typeof data.email === 'string' && !InputValidation.isValidEmail(data.email)) {
+      errors.push({ code: '400-USER-57', message: 'Malformed targetEmail.' })
+    }
+  }
+
   static passwordPresent(data, errors) {
     if (!data.password) {
       errors.push({ code: '400-USER-7', message: 'Missing password.' })
@@ -375,6 +393,13 @@ class UsersValidator {
     UsersValidator.emailRegex(data, errors)
   }
 
+  static getOnlyTargetEmailErrors(data, errors) {
+
+    UsersValidator.targetEmailPresent(data, errors)
+    UsersValidator.targetEmailType(data, errors)
+    UsersValidator.targetEmailRegex(data, errors)
+  }
+
   static getOnlyVerifyTokenErrors(data, errors) {
 
     UsersValidator.verifyTokenPresent(data, errors)
@@ -390,10 +415,6 @@ class UsersValidator {
   }
 
   static getPatchUserByEmailErrors(data, errors) {
-
-    if (!data.email) {
-      return UsersValidator.emailPresent(data, errors)
-    }
 
     if (data.firstName) {
       UsersValidator.firstNameType(data, errors)

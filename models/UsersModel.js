@@ -194,13 +194,15 @@ class UsersModel {
 
   }
 
-  static patchUserByEmail(data) {
+  static patchUserByEmail(req, targetEmail) {
 
     return new Promise((res, rej) => {
 
+      const data = req.body
       const body = {}
       const errors = []
 
+      UsersValidator.getOnlyTargetEmailErrors({ email: targetEmail }, errors)
       UsersValidator.getPatchUserByEmailErrors(data, errors)
 
       if (errors.length) {
@@ -231,12 +233,17 @@ class UsersModel {
       data.verified ? (set.verified = data.verified - 0) : undefined
       data.profilePicPath !== undefined ? (set.profile_pic_path = data.profilePicPath) : undefined
 
-      con.query(sql, [set, data.email], (err, rows, fields) => {
+      con.query(sql, [set, targetEmail], (err, rows, fields) => {
         
         if (err) {
           errors.push({ code: '500-USER-6', message: 'DB updating user by email failed.' })
           body.errors = errors
           return rej({ statusCode: 500, body })
+        }
+
+        // Updating session info if the user changed their email.
+        if (req.session && data.email) {
+          req.session.email = data.email
         }
 
         res({ statusCode: 200, body })

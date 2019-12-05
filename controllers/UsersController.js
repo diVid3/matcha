@@ -108,11 +108,14 @@ class UsersController {
 
   static patchUserByEmail(req, res) {
 
-    UsersModel.patchUserByEmail(req.body)
+    const targetEmail = req.params.email
+
+    UsersModel.patchUserByEmail(req, targetEmail)
     .then((statusObj) => {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
