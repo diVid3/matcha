@@ -81,6 +81,8 @@ class UsersModel {
           return rej({ statusCode: 500, body })
         }
 
+        console.log('returning successful user verification!')
+
         res({ statusCode: 200, body })
       })
     })
@@ -242,7 +244,7 @@ class UsersModel {
         }
 
         // Updating session info if the user changed their email.
-        if (req.session && data.email) {
+        if (req.session && req.session.email && data.email) {
           req.session.email = data.email
         }
 

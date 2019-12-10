@@ -47,7 +47,8 @@ SQLCon.initCon()
     cookie: { httpOnly: false }
   }))
 
-  app.use(express.static(path.join(__dirname, 'build')))
+  // TODO: Enable this if you're going to host a build
+  app.use(express.static('pictures'))
   app.use(router)
   app.listen(3000, () => {
     console.log(`Express server listening on port ${port}.`)

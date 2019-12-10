@@ -16,6 +16,7 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -27,6 +28,7 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -47,6 +49,7 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -67,6 +70,7 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -82,6 +86,7 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -97,6 +102,7 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
+      console.log(statusObj.body)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

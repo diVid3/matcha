@@ -12,15 +12,10 @@ class ViewersController {
 
     ViewersModel.getViewersByID(req.body)
     .then((statusObj) => {
-
-      console.log(statusObj)
-
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-
       console.log(statusObj)
-
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

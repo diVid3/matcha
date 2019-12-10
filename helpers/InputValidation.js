@@ -1,5 +1,19 @@
 const uuidv4Checker = require('uuidv4').default
 
+const acceptedTags = [
+  'cats',
+  'coffee',
+  'gaming',
+  'fishing',
+  'hiking',
+  'reading',
+  'partying',
+  'running',
+  'stars',
+  'science',
+  'cooking',
+]
+
 class InputValidation {
 
   static isValidID(id) {
@@ -19,7 +33,7 @@ class InputValidation {
   }
 
   static isValidBiography(bio) {
-    return /^.{0,500}$/.test(bio)
+    return /^[^\t]{1,250}$/.test(bio)
   }
 
   static isValidAge(age) {
@@ -39,7 +53,7 @@ class InputValidation {
   }
 
   static isValidPassword(password) {
-    return /^(?:\w|[a-z0-9!#$%&'*+/=?^_`{|}~-]){6,200}$/.test(password)
+    return /^(?:\w|[a-z0-9!#$@%&'*+/=?^_`{|}~-]){6,200}$/.test(password)
   }
 
   static isValidFameRating(fameRating) {
@@ -64,6 +78,10 @@ class InputValidation {
 
   static isValidFilePath(filePath) {
     return /^[\w\\\:\-\_\.\/]+$/.test(filePath)
+  }
+
+  static isValidTag(tag) {
+    return acceptedTags.some(acceptedTag => acceptedTag === tag)
   }
 }
 

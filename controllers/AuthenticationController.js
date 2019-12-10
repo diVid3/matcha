@@ -62,6 +62,7 @@ class AuthenticationController {
       }
     })
     .catch((statusObj) => {
+      console.log(statusObj)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -170,6 +171,7 @@ class AuthenticationController {
       })
     })
     .catch((statusObj) => {
+      console.log(statusObj)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

@@ -36,6 +36,72 @@ class TagsModel {
       })
     })
   }
+  
+  static createTagByID(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      TagsValidator.getOnlyTagIDErrors(data, errors)
+      TagsValidator.getOnlyTagStringErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'INSERT INTO `matcha`.`tags` SET ?'
+      const set = {
+        user_id: data.id - 0,
+        tag: data.tag
+      }
+
+      con.query(sql, set, (err, rows, fields) => {
+        
+        if (err) {
+          errors.push({ code: '500-TAG-2', message: 'DB creating tag by session failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        res({ statusCode: 200, body })
+      })
+    })
+  }
+
+  static deleteTagByIDAndString(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      TagsValidator.getOnlyTagIDErrors(data, errors)
+      TagsValidator.getOnlyTagStringErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'DELETE FROM `matcha`.`tags` WHERE `user_id` = ? AND `tag` = ?;'
+
+      con.query(sql, [data.id - 0, data.tag], (err, rows, fields) => {
+        
+        if (err) {
+          errors.push({ code: '500-TAG-3', message: 'DB deleting tag by userID and string failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        res({ statusCode: 200, body })
+      })
+    })
+  }
 }
 
 module.exports = TagsModel

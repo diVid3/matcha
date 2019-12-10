@@ -3,7 +3,12 @@ HTTP 400-TAG:
   400-TAG-1: Missing ID.
   400-TAG-2: ID should be a string.
   400-TAG-3: Malformed ID.
+  400-TAG-4: Missing tag.
+  400-TAG-5: tag should be a string.
+  400-TAG-6: Only accepted tags are: cats, coffee, gaming, fishing, hiking, reading, partying, running, stars, science, cooking.
 
 HTTP 500-TAG:
 
   500-TAG-1: DB getting tags by user_id failed.
+  500-TAG-2: DB creating tag by session failed.
+  500-TAG-3: DB deleting tag by unique ID failed.
