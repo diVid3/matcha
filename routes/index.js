@@ -35,7 +35,8 @@ const {
   AuthenticationController,
   PicturesController,
   TagsController,
-  ViewersController
+  ViewersController,
+  BlockedUsersController
 } = require('../controllers')
 
 // Authentication / Verification
@@ -47,6 +48,7 @@ router.post('/api/v1.0/send-reset-email', AuthenticationController.sendResetEmai
 router.get('/api/v1.0/logged-in', AuthenticationController.isLoggedIn)
 
 // Users resource
+router.get('/api/v1.0/users/session/own-username', UsersController.getSessionUsername)
 router.get('/api/v1.0/users', UsersController.getAllUsers)
 router.post('/api/v1.0/users', UsersController.createUser)
 
@@ -56,7 +58,7 @@ router.get('/api/v1.0/users/email/:email', UsersController.getUserByEmail)
 router.get('/api/v1.0/users/username/:username', UsersController.getUserByUsername)
 router.get('/api/v1.0/users/reset-token/:uuid', UsersController.getUserByResetToken)
 
-router.patch('/api/v1.0/users/id/:id', UsersController.patchUserByID)
+router.patch('/api/v1.0/users/session', UsersController.patchUserBySession)
 router.patch('/api/v1.0/users/email/:email', UsersController.patchUserByEmail)
 router.patch('/api/v1.0/users/username/:username', UsersController.patchUserByUsername)
 
@@ -65,6 +67,7 @@ router.post('/api/v1.0/users/verify-registration', UsersController.verifyUserReg
 
 // Pictures Resource
 router.get('/api/v1.0/pictures/session', PicturesController.getPicturesBySession)
+router.get('/api/v1.0/pictures/username/:username', PicturesController.getPicturesByUsername)
 router.post(
   '/api/v1.0/pictures/pp/session',
   upload.single('fileSelectedPP'),
@@ -95,10 +98,14 @@ router.post(
 
 // Tags Resource
 router.get('/api/v1.0/tags/session', TagsController.getTagsBySession)
+router.get('/api/v1.0/tags/username/:username', TagsController.getTagsByUsername)
 router.post('/api/v1.0/tags/session', TagsController.createTagBySession)
 router.delete('/api/v1.0/tags/session', TagsController.deleteTagBySessionAndString)
 
 // Viewers Resource
 router.get('/api/v1.0/viewers/session', ViewersController.getViewersBySession)
+
+// Blocked Users Resource
+router.get('/api/v1.0/blocked-users/session', BlockedUsersController.getBlockedUsersBySession)
 
 module.exports = router

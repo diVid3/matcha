@@ -4,6 +4,23 @@ const {
 
 class PicturesController {
 
+  static getPicturesByUsername(req, res) {
+
+    req.body = {
+      username: req.params.username
+    }
+
+    PicturesModel.getPicturesByUsername(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      console.log(statusObj.body.errors)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
+
   static getPicturesBySession(req, res) {
 
     req.body = {
@@ -22,8 +39,23 @@ class PicturesController {
 
   static storeProfilePictureBySession(req, res) {
 
-    console.log(req.file)
-    res.status(200).json({})
+    if (req.MulterFileValidationError) {
+      res.status(400).json({
+        errors: [{ code: '400-PIC-4', message: 'Incorrect image type, accepted formats: jpeg, png.' }]
+      })
+    }
+
+    req.body.id = req.session.userId + ''
+
+    PicturesModel.createProfilePictureByID(req.body, req.file)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      console.log(statusObj.body.errors)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 
   static storePictureBySession(req, res) {
@@ -35,6 +67,7 @@ class PicturesController {
     }
 
     req.body.id = req.session.userId + ''
+    req.body.username = req.session.username
 
     PicturesModel.createPictureByID(req.body, req.files)
     .then((statusObj) => {
@@ -42,15 +75,8 @@ class PicturesController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
-      console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
-  }
-
-  // TODO: This will need the pic path to be deleted, so user_id + pic_path, after DB has deleted, delete on disk.
-  // This is called before a new file is uploaded in the old one's place.
-  static deletePictureBySession(req, res) {
-
   }
 }
 

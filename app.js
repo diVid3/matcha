@@ -2,7 +2,6 @@ const express = require('express')
 const helmet = require('helmet')
 const router = require('./routes')
 const SQLCon = require('./config/SQLCon')
-const path = require('path')
 
 // TODO: Remove this if hosting a build.
 const cors = require('cors')

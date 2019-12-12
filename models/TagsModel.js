@@ -6,6 +6,37 @@ const {
 
 class TagsModel {
 
+  static getTagsByUsername(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      TagsValidator.getOnlyTagUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'SELECT * FROM `matcha`.`tags` WHERE `username` = ?;'
+
+      con.query(sql, [data.username], (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-TAG-4', message: 'DB getting tags by username failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
+  }
+
   static getTagsByID(data) {
 
     return new Promise((res, rej) => {
@@ -56,7 +87,8 @@ class TagsModel {
       const sql = 'INSERT INTO `matcha`.`tags` SET ?'
       const set = {
         user_id: data.id - 0,
-        tag: data.tag
+        tag: data.tag,
+        username: data.username
       }
 
       con.query(sql, set, (err, rows, fields) => {

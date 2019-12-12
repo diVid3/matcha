@@ -39,6 +39,24 @@ class TagsValidator {
     }
   }
 
+  static usernamePresent(data, errors) {
+    if (!data.username) {
+      errors.push({ code: '400-TAG-7', message: 'Missing username.' })
+    }
+  }
+
+  static usernameType(data, errors) {
+    if (typeof data.username !== 'string') {
+      errors.push({ code: '400-TAG-8', message: 'username should be a string.' })
+    }
+  }
+
+  static usernameRegex(data, errors) {
+    if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
+      errors.push({ code: '400-TAG-9', message: 'Malformed username.' })
+    }
+  }
+
   static getOnlyTagIDErrors(data, errors) {
 
     TagsValidator.IDPresent(data, errors)
@@ -51,6 +69,13 @@ class TagsValidator {
     TagsValidator.tagPresent(data, errors)
     TagsValidator.tagType(data, errors)
     TagsValidator.tagAccepted(data, errors)
+  }
+
+  static getOnlyTagUsernameErrors(data, errors) {
+
+    TagsValidator.usernamePresent(data, errors)
+    TagsValidator.usernameType(data, errors)
+    TagsValidator.usernameRegex(data, errors)
   }
 }
 

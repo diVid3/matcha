@@ -42,6 +42,7 @@ class AuthenticationController {
 
         req.session.userId = statusObj.body.rows[0].user_id
         req.session.email = statusObj.body.rows[0].email
+        req.session.username = statusObj.body.rows[0].username
 
         // Careful not to use the old .body info below.
         req.body = {

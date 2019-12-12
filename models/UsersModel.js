@@ -191,9 +191,60 @@ class UsersModel {
     })
   }
 
-  static patchUserByID(data) {
+  static patchUserByID(req) {
 
+    return new Promise((res, rej) => {
 
+      const data = req.body
+      const body = {}
+      const errors = []
+
+      UsersValidator.getPatchUserByEmailErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'UPDATE `matcha`.`users` SET ? WHERE `user_id` = ?'
+
+      const set = {}
+
+      data.firstName ? (set.first_name = data.firstName) : undefined
+      data.lastName ? (set.last_name = data.lastName) : undefined
+      data.gender ? (set.gender = data.gender - 0) : undefined
+      data.sexPref ? (set.sex_pref = data.sexPref - 0) : undefined
+      data.biography ? (set.biography = data.biography) : undefined
+      data.username ? (set.username = data.username) : undefined
+      data.email ? (set.email = data.email) : undefined
+      data.password ? (set.password = bcrypt.hashSync(data.password, 10)) : undefined
+      data.fameRating ? (set.fame_rating = data.fameRating - 0) : undefined
+      data.latitude ? (set.latitude = data.latitude) : undefined
+      data.longitude ? (set.longitude = data.longitude) : undefined
+      data.lastSeen ? (set.last_seen = data.lastSeen - 0) : undefined
+      data.age ? (set.age = data.age - 0) : undefined
+      data.resetToken !== undefined ? (set.reset_token = data.resetToken) : undefined
+      data.verifyToken !== undefined ? (set.verify_token = data.verifyToken) : undefined
+      data.verified ? (set.verified = data.verified - 0) : undefined
+      data.profilePicPath !== undefined ? (set.profile_pic_path = data.profilePicPath) : undefined
+
+      con.query(sql, [set, data.id - 0], (err, rows, fields) => {
+        
+        if (err) {
+          errors.push({ code: '500-USER-9', message: 'DB updating user by ID failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        // Updating session info if the user changed their email.
+        if (req.session && req.session.email && data.email) {
+          req.session.email = data.email
+        }
+
+        res({ statusCode: 200, body })
+      })
+    })
   }
 
   static patchUserByEmail(req, targetEmail) {
@@ -213,7 +264,7 @@ class UsersModel {
       }
 
       const con = SQLCon.getCon()
-      const sql = 'UPDATE`matcha`.`users` SET ? WHERE `email` = ?'
+      const sql = 'UPDATE `matcha`.`users` SET ? WHERE `email` = ?'
 
       const set = {}
 

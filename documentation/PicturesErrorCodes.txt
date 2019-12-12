@@ -6,8 +6,14 @@ HTTP 400-PIC:
 
   400-PIC-4: Incorrect image type, accepted formats: jpeg, png.
 
+  400-PIC-5: Missing username.
+  400-PIC-6: username should be a string.
+  400-PIC-7: Malformed username.
+
 HTTP 500-PIC:
 
   500-PIC-1: DB getting pictures by user_id failed.
   500-PIC-2: DB creating picture by user_id failed.
   500-PIC-3: Missing picPath, incorrectly derived.
+  500-PIC-4: DB patching in profile picture by user_id failed.
+  500-PIC-5: DB getting pictures by username failed.

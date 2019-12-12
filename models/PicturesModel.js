@@ -28,6 +28,37 @@ class PicturesModel {
     return picPath
   }
 
+  static getPicturesByUsername(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      PicturesValidator.getOnlyPicUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'SELECT * FROM `matcha`.`pictures` WHERE `username` = ?;'
+
+      con.query(sql, [data.username], (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-PIC-5', message: 'DB getting pictures by username failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
+  }
+
   static getPicturesByID(data) {
 
     return new Promise((res, rej) => {
@@ -59,8 +90,6 @@ class PicturesModel {
     })
   }
 
-  // TODO: Might need to change sql if data.oldPicPath is specified, in that case, delete first, then store, then
-  // send back new picPath
   static createPictureByID(data, files) {
 
     return new Promise((res, rej) => {
@@ -91,7 +120,8 @@ class PicturesModel {
       const sql2 = 'INSERT INTO `matcha`.`pictures` SET ?;'
       const set = {
         user_id: data.id - 0,
-        pic_path: data.picPath
+        pic_path: data.picPath,
+        username: data.username
       }
       let sqlData = set
 
@@ -112,7 +142,56 @@ class PicturesModel {
         if (data.oldPicPath) {
           const oldPicPath = data.oldPicPath.split('/')[3]
           const pathToUnlink = path.join(__dirname, `../pictures/${oldPicPath}`)
-          fs.unlinkSync(pathToUnlink)
+          if (fs.existsSync(pathToUnlink)) {
+            fs.unlinkSync(pathToUnlink)
+          }
+        }
+
+        body.picPath = data.picPath
+        res({ statusCode: 200, body })
+      })
+    })
+  }
+
+  static createProfilePictureByID(data, file) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+      
+      data.picPath = file.path
+
+      PicturesValidator.getOnlyPicIDErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      // Stripping 'pictures/' as to store public path.
+      data.picPath = data.picPath.split('/')[1]
+
+      const con = SQLCon.getCon()
+      const sql = 'UPDATE `matcha`.`users` SET ? WHERE `user_id` = ?;'
+      const set = {
+        profile_pic_path: data.picPath
+      }
+
+      con.query(sql, [set, data.id - 0], (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-PIC-4', message: 'DB patching in profile picture by user_id failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        if (data.oldPicPath) {
+          const oldPicPath = data.oldPicPath.split('/')[3]
+          const pathToUnlink = path.join(__dirname, `../pictures/${oldPicPath}`)
+          if (fs.existsSync(pathToUnlink)) {
+            fs.unlinkSync(pathToUnlink)
+          }
         }
 
         body.picPath = data.picPath

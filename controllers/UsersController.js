@@ -4,6 +4,14 @@ const {
 
 class UsersController {
 
+  static getSessionUsername(req, res) {
+
+    if (req.session && req.session.username) {
+      return res.status(200).json({ status: true, username: req.session.username })
+    }
+    return res.status(200).json({ status: false, message: 'no session username' })
+  }
+
   static getAllUsers(req, res) {
 
 
@@ -107,9 +115,18 @@ class UsersController {
     })
   }
 
-  static patchUserByID(req, res) {
+  static patchUserBySession(req, res) {
 
+    req.body.id = req.session.userId + ''
 
+    UsersModel.patchUserByID(req)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj.body)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 
   static patchUserByEmail(req, res) {

@@ -80,10 +80,11 @@ HTTP 500-USER:
   500-USER-2: DB setting verfied failed.
   500-USER-3: DB nulling verfyToken failed.
   500-USER-4: DB couldn't verify the user.
-  500-USER-5: DB getting user by email failed.
+  500-USER-5: DB getting user by email failed
   500-USER-6: DB updating user by email failed.
   500-USER-7: DB getting user by reset-token failed.
   500-USER-8: DB getting user by username failed.
+  500-USER-9: DB updating user by ID failed.
 
 HTTP 500-SEND-REG-EMAIL:
 

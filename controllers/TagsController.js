@@ -4,6 +4,23 @@ const {
 
 class TagsController {
 
+  static getTagsByUsername(req, res) {
+
+    req.body = {
+      username: req.params.username
+    }
+
+    TagsModel.getTagsByUsername(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      console.log(statusObj.body.errors)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
+
   static getTagsBySession(req, res) {
 
     req.body = {
@@ -23,6 +40,7 @@ class TagsController {
   static createTagBySession(req, res) {
 
     req.body.id = req.session.userId + ''
+    req.body.username = req.session.username
 
     TagsModel.createTagByID(req.body)
     .then((statusObj) => {
