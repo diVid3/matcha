@@ -36,6 +36,44 @@ class ViewersModel {
       })
     })
   }
+
+  static createViewerByID(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      ViewersValidator.getOnlyViewerIDErrors(data, errors)
+      ViewersValidator.getOnlyTargetIDErrors(data, errors)
+      ViewersValidator.getOnlyUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql = 'INSERT INTO `matcha`.`viewers` SET ?'
+      const set = {
+        user_id: data.targetUserID,
+        viewer_id: data.id,
+        viewer_username: data.username
+      }
+      
+      con.query(sql, set, (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-VIEWER-2', message: 'DB creating viewer by targetUserID failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
+  }
 }
 
 module.exports = ViewersModel

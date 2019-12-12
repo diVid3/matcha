@@ -104,6 +104,7 @@ router.delete('/api/v1.0/tags/session', TagsController.deleteTagBySessionAndStri
 
 // Viewers Resource
 router.get('/api/v1.0/viewers/session', ViewersController.getViewersBySession)
+router.post('/api/v1.0/viewers/session', ViewersController.createViewerBySession)
 
 // Blocked Users Resource
 router.get('/api/v1.0/blocked-users/session', BlockedUsersController.getBlockedUsersBySession)

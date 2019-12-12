@@ -19,6 +19,22 @@ class ViewersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
+
+  static createViewerBySession(req, res) {
+
+    req.body.id = req.session.userId + ''
+    req.body.username = req.session.username
+
+    // This needs req.body.targetUserID
+    ViewersModel.createViewerByID(req.body)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
 }
 
 module.exports = ViewersController
