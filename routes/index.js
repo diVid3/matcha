@@ -36,7 +36,9 @@ const {
   PicturesController,
   TagsController,
   ViewersController,
-  BlockedUsersController
+  BlockedUsersController,
+  LikersController,
+  FriendsController
 } = require('../controllers')
 
 // Authentication / Verification
@@ -105,6 +107,14 @@ router.delete('/api/v1.0/tags/session', TagsController.deleteTagBySessionAndStri
 // Viewers Resource
 router.get('/api/v1.0/viewers/session', ViewersController.getViewersBySession)
 router.post('/api/v1.0/viewers/session', ViewersController.createViewerBySession)
+
+// Likers Resource
+router.get('/api/v1.0/likers/session', LikersController.getLikersBySession)
+router.get('/api/v1.0/likers/username/:username', LikersController.getLikersByUsername)
+router.post('/api/v1.0/likers/session', LikersController.createLikerBySession)
+
+// Friends Resource
+router.get('/api/v1.0/friends/username/:username', FriendsController.getFriendsByUsername)
 
 // Blocked Users Resource
 router.get('/api/v1.0/blocked-users/session', BlockedUsersController.getBlockedUsersBySession)

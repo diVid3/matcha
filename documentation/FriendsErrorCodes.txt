@@ -1,0 +1,26 @@
+HTTP 400-FRIEND:
+
+  400-FRIEND-1: Missing id.
+  400-FRIEND-2: id should be a string.
+  400-FRIEND-3: Malformed id.
+
+  400-FRIEND-4: Missing targetUserID.
+  400-FRIEND-5: targetUserID should be a string.
+  400-FRIEND-6: Malformed targetUserID.
+
+  400-FRIEND-7: Missing username.
+  400-FRIEND-8: username should be a string.
+  400-FRIEND-9: Malformed username.
+
+  400-FRIEND-10: Missing targetUsername.
+  400-FRIEND-11: targetUsername should be a string.
+  400-FRIEND-12: Malformed targetUsername.
+
+HTTP 500-FRIEND:
+
+  500-FRIEND-1: DB getting friends by user_id failed.
+  500-FRIEND-2: DB getting friends by username failed.
+  500-FRIEND-3: DB creating friends by usernames failed.
+  500-FRIEND-4: DB creating transaction to increment ratings failed.
+  500-FRIEND-5: DB transaction incrementing ratings query failed.
+  500-FRIEND-6: DB commiting transaction to increment ratings failed.

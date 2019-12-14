@@ -54,14 +54,14 @@ class ViewersModel {
       }
 
       const con = SQLCon.getCon()
-      const sql = 'INSERT INTO `matcha`.`viewers` SET ?'
+      const sql = 'INSERT INTO `matcha`.`viewers` SET ?;'
       const set = {
-        user_id: data.targetUserID,
-        viewer_id: data.id,
+        user_id: data.targetUserID - 0,
+        viewer_id: data.id - 0,
         viewer_username: data.username
       }
       
-      con.query(sql, set, (err, rows, fields) => {
+      con.query(sql, [set], (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-VIEWER-2', message: 'DB creating viewer by targetUserID failed.' })

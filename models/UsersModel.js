@@ -81,8 +81,6 @@ class UsersModel {
           return rej({ statusCode: 500, body })
         }
 
-        console.log('returning successful user verification!')
-
         res({ statusCode: 200, body })
       })
     })

@@ -1,8 +1,8 @@
 HTTP 400-VIEWER:
 
-  400-VIEWER-1: Missing ID.
-  400-VIEWER-2: ID should be a string.
-  400-VIEWER-3: Malformed ID.
+  400-VIEWER-1: Missing id.
+  400-VIEWER-2: id should be a string.
+  400-VIEWER-3: Malformed id.
 
   400-VIEWER-4: Missing targetUserID.
   400-VIEWER-5: targetUserID should be a string.

@@ -4,6 +4,8 @@ const PicturesController = require('./PicturesController')
 const TagsController = require('./TagsController')
 const ViewersController = require('./ViewersController')
 const BlockedUsersController = require('./BlockedUsersController')
+const LikersController = require('./LikersController')
+const FriendsController = require('./FriendsController')
 
 module.exports = {
   UsersController,
@@ -11,5 +13,7 @@ module.exports = {
   PicturesController,
   TagsController,
   ViewersController,
-  BlockedUsersController
+  BlockedUsersController,
+  LikersController,
+  FriendsController
 }
