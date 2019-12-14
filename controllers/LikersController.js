@@ -86,10 +86,29 @@ class LikersController {
     })
   }
 
+  // This requires: { targetUserID, targetUsername }
   static deleteLikerBySession(req, res) {
 
     req.body.id = req.session.userId + ''
     req.body.username = req.session.username
+
+    LikersModel.deleteLikerByID(req.body)
+    .then((statusObj) => {
+
+      return FriendsModel.deleteFriendsByUsernames({
+        id: req.body.id,
+        username: req.body.username,
+        targetUserID: req.body.targetUserID,
+        targetUsername: req.body.targetUsername
+      })
+    })
+    .then((statusObj) => {
+      res.status(200).json({})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 }
 

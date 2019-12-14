@@ -35,10 +35,6 @@ class FriendsController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
-
-  // TODO: This will not be called from the FriendsController but instead from the
-  // LikersController as creating a friend is dependent on if the two users like each other.
-  // { username, id, targetUsername, targetUserID }
 }
 
 module.exports = FriendsController

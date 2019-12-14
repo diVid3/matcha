@@ -21,3 +21,4 @@ HTTP 500-LIKER:
   500-LIKER-1: DB getting likers by user_id failed.
   500-LIKER-2: DB creating liker by targetUserID failed.
   500-LIKER-3: DB getting likers by username failed.
+  500-LIKER-4: DB deleting liker by user_id failed.

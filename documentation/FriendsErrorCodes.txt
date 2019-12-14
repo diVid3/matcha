@@ -24,3 +24,4 @@ HTTP 500-FRIEND:
   500-FRIEND-4: DB creating transaction to increment ratings failed.
   500-FRIEND-5: DB transaction incrementing ratings query failed.
   500-FRIEND-6: DB commiting transaction to increment ratings failed.
+  500-FRIEND-7: DB deleting friends by usernames failed.

@@ -23,7 +23,7 @@ class FriendsModel {
       const con = SQLCon.getCon()
       const sql = 'SELECT * FROM `matcha`.`friends` WHERE `user_id` = ?;'
       
-      con.query(sql, [data.id], (err, rows, fields) => {
+      con.query(sql, [data.id - 0], (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-FRIEND-1', message: 'DB getting friends by user_id failed.' })
@@ -54,7 +54,7 @@ class FriendsModel {
       const con = SQLCon.getCon()
       const sql = 'SELECT * FROM `matcha`.`friends` WHERE `username` = ?;'
 
-      con.query(sql, [data.id], (err, rows, fields) => {
+      con.query(sql, [data.id - 0], (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-FRIEND-2', message: 'DB getting friends by username failed.' })
@@ -90,17 +90,17 @@ class FriendsModel {
       const sql = 'INSERT INTO `matcha`.`friends` SET ?; INSERT INTO `matcha`.`friends` SET ?;'
 
       const set1 = {
-        user_id: data.targetUserID,
+        user_id: data.targetUserID - 0,
         username: data.targetUsername,
-        liker_id: data.id,
-        liker_username: data.username
+        friend_id: data.id - 0,
+        friend_username: data.username
       }
 
       const set2 = {
-        user_id: data.id,
+        user_id: data.id - 0,
         username: data.username,
-        liker_id: data.targetUserID,
-        liker_username: data.targetUsername
+        friend_id: data.targetUserID - 0,
+        friend_username: data.targetUsername
       }
 
       con.query(sql, [set1, set2], (err, rows, fields) => {
@@ -143,6 +143,40 @@ class FriendsModel {
             res({ statusCode: 200, body })
           })
         })
+      })
+    })
+  }
+
+  // expects: { username, targetUsername }
+  static deleteFriendsByUsernames(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      FriendsValidator.getOnlyUsernameErrors(data, errors)
+      FriendsValidator.getOnlyTargetUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+      const sql1 = 'DELETE FROM `matcha`.`friends` WHERE `username` = ? AND `friend_username` = ?; '
+      const sql2 = 'DELETE FROM `matcha`.`friends` WHERE `username` = ? AND `friend_username` = ?;'
+      const sqlData = [data.username, data.targetUsername, data.targetUsername, data.username]
+
+      con.query(sql1 + sql2, sqlData, (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-FRIEND-7', message: 'DB deleting friends by usernames failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        res({ statusCode: 200, body })
       })
     })
   }

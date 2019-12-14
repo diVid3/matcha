@@ -23,7 +23,7 @@ class ViewersModel {
       const con = SQLCon.getCon()
       const sql = 'SELECT * FROM `matcha`.`viewers` WHERE `user_id` = ?;'
       
-      con.query(sql, [data.id], (err, rows, fields) => {
+      con.query(sql, [data.id - 0], (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-VIEWER-1', message: 'DB getting viewers by user_id failed.' })
