@@ -74,6 +74,10 @@ HTTP 400-USER:
   400-USER-56: targetEmail should be a string.
   400-USER-57: Malformed targetEmail.
 
+  400-USER-58: Missing targetUsername.
+  400-USER-59: targetUsername should be a string.
+  400-USER-60: Malformed targetUsername.
+
 HTTP 500-USER:
 
   500-USER-1: DB inserting new user failed.
@@ -85,6 +89,14 @@ HTTP 500-USER:
   500-USER-7: DB getting user by reset-token failed.
   500-USER-8: DB getting user by username failed.
   500-USER-9: DB updating user by ID failed.
+
+  500-USER-10: DB creating transaction to increment fame_rating failed.
+  500-USER-11: DB transaction incrementing fame_rating query failed.
+  500-USER-12: DB commiting transaction to increment fame_rating failed.
+
+  500-USER-13: DB creating transaction to decrement fame_rating failed.
+  500-USER-14: DB transaction decrementing fame_rating query failed.
+  500-USER-15: DB commiting transaction to decrement fame_rating failed.
 
 HTTP 500-SEND-REG-EMAIL:
 

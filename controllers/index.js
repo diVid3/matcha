@@ -6,6 +6,8 @@ const ViewersController = require('./ViewersController')
 const BlockedUsersController = require('./BlockedUsersController')
 const LikersController = require('./LikersController')
 const FriendsController = require('./FriendsController')
+const FakeUsersController = require('./FakeUsersController')
+const ChatSessionsController = require('./ChatSessionsController')
 
 module.exports = {
   UsersController,
@@ -15,5 +17,7 @@ module.exports = {
   ViewersController,
   BlockedUsersController,
   LikersController,
-  FriendsController
+  FriendsController,
+  FakeUsersController,
+  ChatSessionsController
 }

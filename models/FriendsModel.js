@@ -54,7 +54,7 @@ class FriendsModel {
       const con = SQLCon.getCon()
       const sql = 'SELECT * FROM `matcha`.`friends` WHERE `username` = ?;'
 
-      con.query(sql, [data.id - 0], (err, rows, fields) => {
+      con.query(sql, data.username, (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-FRIEND-2', message: 'DB getting friends by username failed.' })
@@ -76,7 +76,7 @@ class FriendsModel {
       const body = {}
       const errors = []
 
-      FriendsValidator.getOnlyLikerIDErrors(data, errors)
+      FriendsValidator.getOnlyFriendIDErrors(data, errors)
       FriendsValidator.getOnlyUsernameErrors(data, errors)
       FriendsValidator.getOnlyTargetIDErrors(data, errors)
       FriendsValidator.getOnlyTargetUsernameErrors(data, errors)
@@ -110,39 +110,9 @@ class FriendsModel {
           body.errors = errors
           return rej({ statusCode: 500, body })
         }
-      })
 
-      // This is for ACID, otherwise might have read + write concurrency problems calculating the rating.
-      con.beginTransaction((err) => {
-        if (err) {
-          errors.push({ code: '500-FRIEND-4', message: 'DB creating transaction to increment ratings failed.' })
-          body.errors = errors
-          return rej({ statusCode: 500, body })
-        }
-
-        const sql1 = 'UPDATE `matcha`.`users` SET `fame_rating` = `fame_rating` + 1 WHERE `username` = ?; '
-        const sql2 = 'UPDATE `matcha`.`users` SET `fame_rating` = `fame_rating` + 1 WHERE `username` = ?;'
-
-        con.query(sql1 + sql2, [data.username, data.targetUsername], (err, rows, fields) => {
-          if (err) {
-            con.rollback(() => {
-              errors.push({ code: '500-FRIEND-5', message: 'DB transaction incrementing ratings query failed.' })
-              body.errors = errors
-              return rej({ statusCode: 500, body })
-            })
-          }
-
-          con.commit((err) => {
-            if (err) {
-              con.rollback(() => {
-                errors.push({ code: '500-FRIEND-6', message: 'DB commiting transaction to increment ratings failed.' })
-                body.errors = errors
-                return rej({ statusCode: 500, body })
-              })
-            }
-            res({ statusCode: 200, body })
-          })
-        })
+        body.madeFriends = true
+        res({ statusCode: 200, body })
       })
     })
   }
@@ -171,9 +141,14 @@ class FriendsModel {
       con.query(sql1 + sql2, sqlData, (err, rows, fields) => {
 
         if (err) {
-          errors.push({ code: '500-FRIEND-7', message: 'DB deleting friends by usernames failed.' })
+          errors.push({ code: '500-FRIEND-4', message: 'DB deleting friends by usernames failed.' })
           body.errors = errors
           return rej({ statusCode: 500, body })
+        }
+
+        // If unfriended people
+        if (rows.some((thing) => !!thing.affectedRows)) {
+          body.unfriended = true
         }
 
         res({ statusCode: 200, body })

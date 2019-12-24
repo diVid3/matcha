@@ -5,6 +5,8 @@ const ViewersValidator = require('./ViewersValidator')
 const BlockedUsersValidator = require('./BlockedUsersValidator')
 const LikersValidator = require('./LikersValidator')
 const FriendsValidator = require('./FriendsValidator')
+const FakeUsersValidator = require('./FakeUsersValidator')
+const ChatSessionsValidator = require('./ChatSessionsValidator')
 
 module.exports = {
   UsersValidator,
@@ -13,5 +15,7 @@ module.exports = {
   ViewersValidator,
   BlockedUsersValidator,
   LikersValidator,
-  FriendsValidator
+  FriendsValidator,
+  FakeUsersValidator,
+  ChatSessionsValidator
 }

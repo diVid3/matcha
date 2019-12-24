@@ -38,7 +38,9 @@ const {
   ViewersController,
   BlockedUsersController,
   LikersController,
-  FriendsController
+  FriendsController,
+  FakeUsersController,
+  ChatSessionsController
 } = require('../controllers')
 
 // Authentication / Verification
@@ -59,6 +61,7 @@ router.get('/api/v1.0/users/id/:id', UsersController.getUserByID)
 router.get('/api/v1.0/users/email/:email', UsersController.getUserByEmail)
 router.get('/api/v1.0/users/username/:username', UsersController.getUserByUsername)
 router.get('/api/v1.0/users/reset-token/:uuid', UsersController.getUserByResetToken)
+router.get('/api/v1.0/users/logged-in/:username', UsersController.isLoggedIn)
 
 router.patch('/api/v1.0/users/session', UsersController.patchUserBySession)
 router.patch('/api/v1.0/users/email/:email', UsersController.patchUserByEmail)
@@ -110,13 +113,22 @@ router.post('/api/v1.0/viewers/session', ViewersController.createViewerBySession
 
 // Likers Resource
 router.get('/api/v1.0/likers/session', LikersController.getLikersBySession)
-router.get('/api/v1.0/likers/username/:username', LikersController.getLikersByUsername)
 router.post('/api/v1.0/likers/session', LikersController.createLikerBySession)
+router.delete('/api/v1.0/likers/session', LikersController.deleteLikerBySession)
+router.get('/api/v1.0/likers/username/:username', LikersController.getLikersByUsername)
 
 // Friends Resource
 router.get('/api/v1.0/friends/username/:username', FriendsController.getFriendsByUsername)
 
 // Blocked Users Resource
 router.get('/api/v1.0/blocked-users/session', BlockedUsersController.getBlockedUsersBySession)
+router.post('/api/v1.0/blocked-users/session', BlockedUsersController.createBlockedUserBySession)
+router.delete('/api/v1.0/blocked-users/session', BlockedUsersController.deleteBlockedUserBySession)
+
+// Fake Users Resource
+router.post('/api/v1.0/fake-users/session', FakeUsersController.createFakeUserBySession)
+
+// Chat Sessions Resource
+router.get('/api/v1.0/chat-sessions/session', ChatSessionsController.getChatSessionsBySession) // TODO: Make this.
 
 module.exports = router

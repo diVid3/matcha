@@ -16,7 +16,7 @@ class PicturesController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
-      console.log(statusObj.body.errors)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -33,6 +33,7 @@ class PicturesController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -53,7 +54,7 @@ class PicturesController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
-      console.log(statusObj.body.errors)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -75,6 +76,7 @@ class PicturesController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

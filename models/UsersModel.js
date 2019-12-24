@@ -306,6 +306,106 @@ class UsersModel {
 
 
   }
+
+  static increaseUserRating(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      UsersValidator.getOnlyTargetUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+
+      // This is for ACID, otherwise might have read + write concurrency problems calculating the rating.
+      con.beginTransaction((err) => {
+        if (err) {
+          errors.push({ code: '500-USER-10', message: 'DB creating transaction to increment fame_rating failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        const sql = 'UPDATE `matcha`.`users` SET `fame_rating` = `fame_rating` + 1 WHERE `username` = ?; '
+
+        con.query(sql, data.targetUsername, (err, rows, fields) => {
+          if (err) {
+            con.rollback(() => {
+              errors.push({ code: '500-USER-11', message: 'DB transaction incrementing fame_rating query failed.' })
+              body.errors = errors
+              return rej({ statusCode: 500, body })
+            })
+          }
+
+          con.commit((err) => {
+            if (err) {
+              con.rollback(() => {
+                errors.push({ code: '500-USER-12', message: 'DB commiting transaction to increment fame_rating failed.' })
+                body.errors = errors
+                return rej({ statusCode: 500, body })
+              })
+            }
+            res({ statusCode: 200, body })
+          })
+        })
+      })
+    })
+  }
+
+  static decreaseUserRating(data) {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      UsersValidator.getOnlyTargetUsernameErrors(data, errors)
+
+      if (errors.length) {
+        body.errors = errors
+        return rej({ statusCode: 400, body })
+      }
+
+      const con = SQLCon.getCon()
+
+      // This is for ACID, otherwise might have read + write concurrency problems calculating the rating.
+      con.beginTransaction((err) => {
+        if (err) {
+          errors.push({ code: '500-USER-13', message: 'DB creating transaction to decrement fame_rating failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        const sql = 'UPDATE `matcha`.`users` SET `fame_rating` = `fame_rating` - 1 WHERE `username` = ?; '
+
+        con.query(sql, data.targetUsername, (err, rows, fields) => {
+          if (err) {
+            con.rollback(() => {
+              errors.push({ code: '500-USER-14', message: 'DB transaction decrementing fame_rating query failed.' })
+              body.errors = errors
+              return rej({ statusCode: 500, body })
+            })
+          }
+
+          con.commit((err) => {
+            if (err) {
+              con.rollback(() => {
+                errors.push({ code: '500-USER-15', message: 'DB commiting transaction to decrement fame_rating failed.' })
+                body.errors = errors
+                return rej({ statusCode: 500, body })
+              })
+            }
+            res({ statusCode: 200, body })
+          })
+        })
+      })
+    })
+  }
 }
 
 module.exports = UsersModel

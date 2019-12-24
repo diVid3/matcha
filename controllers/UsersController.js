@@ -2,6 +2,8 @@ const {
   UsersModel
 } = require('../models')
 
+const SocketStore = require('../helpers/SocketStore')
+
 class UsersController {
 
   static getSessionUsername(req, res) {
@@ -15,6 +17,16 @@ class UsersController {
   static getAllUsers(req, res) {
 
 
+  }
+
+  static isLoggedIn(req, res) {
+
+    if (!SocketStore.getSocket(req.params.username)) {
+
+      return res.status(200).json({ status: false, message: `${req.params.username} isn't logged in.` })
+    }
+  
+    res.status(200).json({ status: true, message: `${req.params.username} is logged in.` })
   }
 
   static createUser(req, res) {

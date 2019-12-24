@@ -4,39 +4,46 @@ class BlockedUsersValidator {
   
   static IDPresent(data, errors) {
     if (!data.id) {
-      errors.push({ code: '400-BU-1', message: 'Missing ID.' })
+      errors.push({ code: '400-BU-1', message: 'Missing id.' })
     }
   }
 
   static IDType(data, errors) {
     if (typeof data.id !== 'string') {
-      errors.push({ code: '400-BU-2', message: 'ID should be a string.' })
+      errors.push({ code: '400-BU-2', message: 'id should be a string.' })
     }
   }
 
   static IDRegex(data, errors) {
     if (typeof data.id === 'string' && !InputValidation.isValidID(data.id)) {
-      errors.push({ code: '400-BU-3', message: 'Malformed ID.' })
+      errors.push({ code: '400-BU-3', message: 'Malformed id.' })
+    }
+  }
+  
+  static targetUserIDPresent(data, errors) {
+    if (!data.targetUserID) {
+      errors.push({ code: '400-FRIEND-4', message: 'Missing targetUserID.' })
     }
   }
 
-  // static usernamePresent(data, errors) {
-  //   if (!data.username) {
-  //     errors.push({ code: '400-TAG-7', message: 'Missing username.' })
-  //   }
-  // }
+  static targetUserIDType(data, errors) {
+    if (typeof data.targetUserID !== 'string') {
+      errors.push({ code: '400-FRIEND-5', message: 'targetUserID should be a string.' })
+    }
+  }
 
-  // static usernameType(data, errors) {
-  //   if (typeof data.username !== 'string') {
-  //     errors.push({ code: '400-TAG-8', message: 'username should be a string.' })
-  //   }
-  // }
+  static targetUserIDRegex(data, errors) {
+    if (typeof data.targetUserID === 'string' && !InputValidation.isValidID(data.targetUserID)) {
+      errors.push({ code: '400-FRIEND-6', message: 'Malformed targetUserID.' })
+    }
+  }
 
-  // static usernameRegex(data, errors) {
-  //   if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
-  //     errors.push({ code: '400-TAG-9', message: 'Malformed username.' })
-  //   }
-  // }
+  static getOnlyTargetIDErrors(data, errors) {
+
+    BlockedUsersValidator.targetUserIDPresent(data, errors)
+    BlockedUsersValidator.targetUserIDType(data, errors)
+    BlockedUsersValidator.targetUserIDRegex(data, errors)
+  }
 
   static getOnlyBlockedUsersIDErrors(data, errors) {
 
@@ -44,13 +51,6 @@ class BlockedUsersValidator {
     BlockedUsersValidator.IDType(data, errors)
     BlockedUsersValidator.IDRegex(data, errors)
   }
-
-  // static getOnlyTagUsernameErrors(data, errors) {
-
-  //   BlockedUsersValidator.usernamePresent(data, errors)
-  //   BlockedUsersValidator.usernameType(data, errors)
-  //   BlockedUsersValidator.usernameRegex(data, errors)
-  // }
 }
 
 module.exports = BlockedUsersValidator

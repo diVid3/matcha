@@ -1,9 +1,11 @@
 HTTP 400-BU:
 
-  400-BU-1: Missing ID.
-  400-BU-2: ID should be a string.
-  400-BU-3: Malformed ID.
+  400-BU-1: Missing id.
+  400-BU-2: id should be a string.
+  400-BU-3: Malformed id.
 
 HTTP 500-BU:
 
   500-BU-1: DB getting blocked users by user_id failed.
+  500-BU-2: DB creating blocked user by user_id failed.
+  500-BU-3: DB deleting blocked user by user_id failed.

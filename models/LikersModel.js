@@ -54,7 +54,7 @@ class LikersModel {
       const con = SQLCon.getCon()
       const sql = 'SELECT * FROM `matcha`.`likers` WHERE `username` = ?;'
 
-      con.query(sql, [data.id - 0], (err, rows, fields) => {
+      con.query(sql, data.username, (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-LIKER-3', message: 'DB getting likers by username failed.' })
@@ -125,7 +125,7 @@ class LikersModel {
       const con = SQLCon.getCon()
       const sql = 'DELETE FROM `matcha`.`likers` WHERE `user_id` = ?;'
 
-      con.query(sql1, [data.targetUserID - 0], (err, rows, fields) => {
+      con.query(sql, [data.targetUserID - 0], (err, rows, fields) => {
 
         if (err) {
           errors.push({ code: '500-LIKER-4', message: 'DB deleting liker by user_id failed.' })

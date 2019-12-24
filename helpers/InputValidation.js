@@ -17,7 +17,7 @@ const acceptedTags = [
 class InputValidation {
 
   static isValidID(id) {
-    return /^[1-9]+$/.test(id)
+    return /^[0-9]+$/.test(id)
   }
 
   static isValidName(name) {

@@ -21,7 +21,4 @@ HTTP 500-FRIEND:
   500-FRIEND-1: DB getting friends by user_id failed.
   500-FRIEND-2: DB getting friends by username failed.
   500-FRIEND-3: DB creating friends by usernames failed.
-  500-FRIEND-4: DB creating transaction to increment ratings failed.
-  500-FRIEND-5: DB transaction incrementing ratings query failed.
-  500-FRIEND-6: DB commiting transaction to increment ratings failed.
-  500-FRIEND-7: DB deleting friends by usernames failed.
+  500-FRIEND-4: DB deleting friends by usernames failed.

@@ -16,7 +16,7 @@ class TagsController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
-      console.log(statusObj.body.errors)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -33,6 +33,7 @@ class TagsController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -48,6 +49,7 @@ class TagsController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -61,7 +63,8 @@ class TagsController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body.errors)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

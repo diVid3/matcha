@@ -110,6 +110,24 @@ class UsersValidator {
     }
   }
 
+  static targetUsernamePresent(data, errors) {
+    if (!data.targetUsername) {
+      errors.push({ code: '400-USER-58', message: 'Missing targetUsername.' })
+    }
+  }
+
+  static targetUsernameType(data, errors) {
+    if (typeof data.targetUsername !== 'string') {
+      errors.push({ code: '400-USER-59', message: 'targetUsername should be a string.' })
+    }
+  }
+
+  static targetUsernameRegex(data, errors) {
+    if (typeof data.targetUsername === 'string' && !InputValidation.isValidName(data.targetUsername)) {
+      errors.push({ code: '400-USER-60', message: 'Malformed targetUsername.' })
+    }
+  }
+
   static emailPresent(data, errors) {
     if (!data.email) {
       errors.push({ code: '400-USER-6', message: 'Missing email.' })
@@ -384,6 +402,13 @@ class UsersValidator {
     UsersValidator.usernamePresent(data, errors)
     UsersValidator.usernameType(data, errors)
     UsersValidator.usernameRegex(data, errors)
+  }
+
+  static getOnlyTargetUsernameErrors(data, errors) {
+
+    UsersValidator.targetUsernamePresent(data, errors)
+    UsersValidator.targetUsernameType(data, errors)
+    UsersValidator.targetUsernameRegex(data, errors)
   }
 
   static getOnlyEmailErrors(data, errors) {

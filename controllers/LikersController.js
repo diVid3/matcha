@@ -1,6 +1,7 @@
 const {
   LikersModel,
-  FriendsModel
+  FriendsModel,
+  UsersModel
 } = require('../models')
 
 class LikersController {
@@ -17,6 +18,7 @@ class LikersController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -33,22 +35,21 @@ class LikersController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
 
-  // TODO: This might need to change as the creation of a friend is dependent on if the
-  // the target user also likes you, not only just you liking the target user. If they
-  // both like each other, then they are said to be friends. If they are confirmed to
-  // be friends, two new entries into the friends table should be inserted, swapping
-  // userID's and usernames.
   // This requires: { targetUserID, targetUsername }
   static createLikerBySession(req, res) {
 
     req.body.id = req.session.userId + ''
     req.body.username = req.session.username
 
-    LikersModel.createLikerByID(req.body)
+    Promise.all([
+      UsersModel.increaseUserRating(req.body),
+      LikersModel.createLikerByID(req.body),
+    ])
     .then((statusObj) => {
 
       return Promise.all([
@@ -58,14 +59,14 @@ class LikersController {
     })
     .then((obj) => {
 
-      const myLikers = obj[0].rows
-      const theirLikers = obj[1].rows
+      const myLikers = obj[0].body.rows
+      const theirLikers = obj[1].body.rows
 
       const myUsername = req.body.username
       const theirUsername = req.body.targetUsername
 
-      const iLikeThem = theirLikers.some((liker) => liker.username === myUsername)
-      const theyLikeMe = myLikers.some((liker) => liker.username === theirUsername)
+      const iLikeThem = theirLikers.some((liker) => liker.liker_username === myUsername)
+      const theyLikeMe = myLikers.some((liker) => liker.liker_username === theirUsername)
 
       if (iLikeThem && theyLikeMe) {
 
@@ -77,11 +78,17 @@ class LikersController {
         })
       }
     })
-    .then((statusObj) => {
+    .then((statusObj) => { // statusObj can be undefined if the if-statement above is skipped.
+
+      if (statusObj) {
+        return res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+      }
+
       res.status(200).json({})
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -92,21 +99,17 @@ class LikersController {
     req.body.id = req.session.userId + ''
     req.body.username = req.session.username
 
-    LikersModel.deleteLikerByID(req.body)
-    .then((statusObj) => {
-
-      return FriendsModel.deleteFriendsByUsernames({
-        id: req.body.id,
-        username: req.body.username,
-        targetUserID: req.body.targetUserID,
-        targetUsername: req.body.targetUsername
-      })
-    })
-    .then((statusObj) => {
-      res.status(200).json({})
+    Promise.all([
+      LikersModel.deleteLikerByID(req.body),
+      UsersModel.decreaseUserRating(req.body),
+      FriendsModel.deleteFriendsByUsernames(req.body)
+    ])
+    .then((obj) => {
+      res.status(obj[2].statusCode || 500).json(obj[2].body || {})
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

@@ -1,0 +1,9 @@
+HTTP 400-FAKE:
+
+  400-FAKE-1: Missing targetUserID.
+  400-FAKE-2: targetUserID should be a string.
+  400-FAKE-3: Malformed targetUserID.
+
+HTTP 500-FAKE:
+
+  500-FAKE-1: DB creating fake user by user_id failed.

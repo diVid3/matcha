@@ -3,6 +3,7 @@ const Config = new (require('../config/Config'))()
 const CookieConfig = new (require('../config/CookieConfig'))()
 const uuidv4 = require('uuid/v4')
 const bcrypt = require('bcrypt')
+const SocketStore = require('../helpers/SocketStore')
 
 const {
   UsersValidator
@@ -55,7 +56,7 @@ class AuthenticationController {
           res
           .status(200)
           .cookie('sid', `${req.session.id}`, CookieConfig.cookieOptions)
-          .json({ status: true, message: '' })
+          .json({ status: true, message: '', username: req.session.username })
         })
         .catch((statusObj) => {
           throw statusObj
@@ -64,11 +65,17 @@ class AuthenticationController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
 
   static logout(req, res) {
+
+    // destroy SocketStore entry here.
+    SocketStore.removeEntry(req.session.username)
+    
+    const destroyedUsername = req.session.username
 
     req.session.destroy((err) => {
 
@@ -77,7 +84,7 @@ class AuthenticationController {
         res.status(500).json({ code: '500-DEL-SESS-1', message: 'The session could not be destroyed.' })
       }
 
-      res.status(200).clearCookie('sid').json({ status: true, message: 'Logged out.' })
+      res.status(200).clearCookie('sid').json({ status: true, message: 'Logged out.', username: destroyedUsername })
     })
   }
 
@@ -173,6 +180,7 @@ class AuthenticationController {
     })
     .catch((statusObj) => {
       console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

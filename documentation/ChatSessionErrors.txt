@@ -1,0 +1,9 @@
+HTTP 400-CHAT:
+
+  400-CHAT-1: Missing id.
+  400-CHAT-2: id should be a string.
+  400-CHAT-3: Malformed id.
+
+HTTP 500-CHAT:
+
+  500-CHAT-1: DB getting chat sessions by user_id failed.
