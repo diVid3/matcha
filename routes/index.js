@@ -40,7 +40,8 @@ const {
   LikersController,
   FriendsController,
   FakeUsersController,
-  ChatSessionsController
+  ChatSessionsController,
+  MessagesController
 } = require('../controllers')
 
 // Authentication / Verification
@@ -129,6 +130,10 @@ router.delete('/api/v1.0/blocked-users/session', BlockedUsersController.deleteBl
 router.post('/api/v1.0/fake-users/session', FakeUsersController.createFakeUserBySession)
 
 // Chat Sessions Resource
-router.get('/api/v1.0/chat-sessions/session', ChatSessionsController.getChatSessionsBySession) // TODO: Make this.
+router.get('/api/v1.0/chat-sessions/session', ChatSessionsController.getChatSessionsBySession)
+
+// Messages Resource
+router.get('/api/v1.0/messages/friend/id/:targetUserID', MessagesController.getMessagesBySessionAndTargetID)
+// TODO: router.post('/api/v1.0/messages, MessageController.createMessageBySession)
 
 module.exports = router

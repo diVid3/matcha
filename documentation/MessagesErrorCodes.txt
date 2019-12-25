@@ -1,0 +1,12 @@
+HTTP 400-MES:
+
+  400-MES-1: Missing id.
+  400-MES-2: id should be a string.
+  400-MES-3: Malformed id.
+  400-MES-4: Missing targetUserID.
+  400-MES-5: targetUserID should be a string.
+  400-MES-6: Malformed targetUserID.
+
+HTTP 500-MES:
+
+  500-MES-1: DB getting message feed by user_id and targetID failed.

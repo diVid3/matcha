@@ -8,6 +8,7 @@ const LikersController = require('./LikersController')
 const FriendsController = require('./FriendsController')
 const FakeUsersController = require('./FakeUsersController')
 const ChatSessionsController = require('./ChatSessionsController')
+const MessagesController = require('./MessagesController')
 
 module.exports = {
   UsersController,
@@ -19,5 +20,6 @@ module.exports = {
   LikersController,
   FriendsController,
   FakeUsersController,
-  ChatSessionsController
+  ChatSessionsController,
+  MessagesController
 }
