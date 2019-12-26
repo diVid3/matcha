@@ -5,6 +5,7 @@
 // 2nd one has better performance.
 
 const socketStore = {}
+let socketSessionInfo = null
 
 class SocketStore {
 
@@ -47,6 +48,18 @@ class SocketStore {
 
       return socketStore[username].socket
     }
+  }
+
+  static saveSocketSessionInfo(data) {
+
+    socketSessionInfo = JSON.parse(data)
+
+    console.log(socketSessionInfo)
+  }
+
+  static getSocketSessionInfo() {
+
+    return socketSessionInfo
   }
 }
 

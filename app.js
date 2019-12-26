@@ -61,6 +61,7 @@ io.on('connection', (socket) => {
           }
   
           const data = JSON.parse(json)
+          SocketStore.saveSocketSessionInfo(json)
   
           if (!SocketStore.getSocket(data.username)) {
   
