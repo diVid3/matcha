@@ -6,6 +6,7 @@ const socket = require('socket.io')
 const Config = new (require('./config/Config'))()
 const SocketStore = require('./helpers/SocketStore')
 const ConfigureSockets = require('./helpers/ConfigureSockets')
+const RedisClientWrapper = require('./helpers/RedisClientWrapper')
 
 // TODO: Remove this if hosting a build.
 const cors = require('cors')
@@ -22,6 +23,8 @@ const redis = require('redis')
 const session = require('express-session')
 const RedisStore = require('connect-redis')(session)
 const client = redis.createClient()
+
+RedisClientWrapper.saveRedisClient(client)
 
 const port = 3000
 const app = express()
@@ -59,18 +62,19 @@ io.on('connection', (socket) => {
   
             return
           }
-  
+
           const data = JSON.parse(json)
-          SocketStore.saveSocketSessionInfo(json)
   
           if (!SocketStore.getSocket(data.username)) {
   
             ConfigureSockets.attachPresenceListeners(socket)
+            ConfigureSockets.attachMessageListeners(socket)
             SocketStore.addEntry(data.username, cookieStr, socket)
           }
           else {
   
             ConfigureSockets.attachPresenceListeners(socket)
+            ConfigureSockets.attachMessageListeners(socket)
             SocketStore.updateSocket(cookieStr, socket)
           }
         })

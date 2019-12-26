@@ -9,7 +9,7 @@ class UsersController {
   static getSessionUsername(req, res) {
 
     if (req.session && req.session.username) {
-      return res.status(200).json({ status: true, username: req.session.username })
+      return res.status(200).json({ status: true, username: req.session.username, id: req.session.id })
     }
     return res.status(200).json({ status: false, message: 'no session username' })
   }
