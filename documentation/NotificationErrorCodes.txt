@@ -1,0 +1,22 @@
+HTTP 400-NOTIF:
+
+  400-NOTIF-1: Missing id.
+  400-NOTIF-2: id should be a string.
+  400-NOTIF-3: Malformed id.
+
+  400-NOTIF-10: Missing notification.
+  400-NOTIF-11: notification should be a string.
+  400-NOTIF-12: Malformed notification.
+
+  400-NOTIF-13: Missing read.
+  400-NOTIF-14: read should be a string.
+  400-NOTIF-15: Malformed read.
+
+  400-NOTIF-10: Missing username.
+  400-NOTIF-11: username should be a string.
+  400-NOTIF-12: Malformed username.
+
+HTTP 500-NOTIF:
+
+  500-NOTIF-1: DB getting notifications by username failed.
+  500-NOTIF-2: DB creating notification by username failed.

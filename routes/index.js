@@ -41,7 +41,8 @@ const {
   FriendsController,
   FakeUsersController,
   ChatSessionsController,
-  MessagesController
+  MessagesController,
+  NotificationsController
 } = require('../controllers')
 
 // Authentication / Verification
@@ -134,6 +135,9 @@ router.get('/api/v1.0/chat-sessions/session', ChatSessionsController.getChatSess
 
 // Messages Resource
 router.get('/api/v1.0/messages/friend/id/:targetUserID', MessagesController.getMessagesBySessionAndTargetID)
-// TODO: router.post('/api/v1.0/messages, MessageController.createMessageBySession)
+
+// Notifications Resource
+router.get('/api/v1.0/notifications/session', NotificationsController.getNotificationsBySession)
+router.post('/api/v1.0/notifications/session', NotificationsController.createNotificationBySession)
 
 module.exports = router

@@ -8,6 +8,7 @@ const FriendsModel = require('./FriendsModel')
 const FakeUsersModel = require('./FakeUsersModel')
 const ChatSessionsModel = require('./ChatSessionsModel')
 const MessagesModel = require('./MessagesModel')
+const NotificationsModel = require('./NotificationsModel')
 
 module.exports = {
   UsersModel,
@@ -19,5 +20,6 @@ module.exports = {
   FriendsModel,
   FakeUsersModel,
   ChatSessionsModel,
-  MessagesModel
+  MessagesModel,
+  NotificationsModel
 }

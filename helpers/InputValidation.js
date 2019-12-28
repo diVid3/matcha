@@ -95,6 +95,10 @@ class InputValidation {
   static isValidRead(read) {
     return /^[01]$/.test(read)
   }
+
+  static isValidNotification(notification) {
+    return /^.{1,500}$/.test(notification)
+  }
 }
 
 module.exports = InputValidation
