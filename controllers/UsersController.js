@@ -36,7 +36,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -48,7 +49,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -69,7 +71,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -90,7 +93,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -106,7 +110,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -122,7 +127,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -136,7 +142,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
@@ -150,7 +157,8 @@ class UsersController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
     .catch((statusObj) => {
-      console.log(statusObj.body)
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }

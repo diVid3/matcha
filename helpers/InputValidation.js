@@ -83,6 +83,18 @@ class InputValidation {
   static isValidTag(tag) {
     return acceptedTags.some(acceptedTag => acceptedTag === tag)
   }
+
+  static isValidMessage(message) {
+    return /^.{1,10000}$/.test(message)
+  }
+
+  static isValidTimeIssued(timeIssued) {
+    return /^\d+$/.test(timeIssued)
+  }
+
+  static isValidRead(read) {
+    return /^[01]$/.test(read)
+  }
 }
 
 module.exports = InputValidation

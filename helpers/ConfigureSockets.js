@@ -1,5 +1,8 @@
 const RedisClientWrapper = require('./RedisClientWrapper')
 const SocketStore = require('./SocketStore')
+const {
+  MessagesModel
+} = require('../models')
 
 class ConfigureSockets {
 
@@ -39,27 +42,37 @@ class ConfigureSockets {
 
         const redisData = JSON.parse(json)
 
-        console.log(data)
-        console.log(redisData)
+        const trueForwardMessage = {
+          user_id: redisData.userId,
+          other_user_id: data.targetUserID - 0,
+          time_issued: data.timeIssued,
+          message: data.message,
+          read: data.read,
+          username: redisData.username
+        }
 
-        // If the targeted user is already online
+        // If the targeted user is already online, forward message so long.
         if (targetSocket) {
-
-          // TODO: fashioned a new message to mimic true database message.
-          const trueForwardMessage = {
-            user_id: redisData.userId,
-            other_user_id: data.targetUserID - 0,
-            time_issued: data.timeIssued,
-            message: data.message,
-            read: data.read,
-            username: redisData.username
-          }
-  
           targetSocket.emit('fromServerChatMessage', trueForwardMessage)
         }
+
+        // message format for MessageModel validation.
+        const dbMessage = {
+          id: redisData.userId + '',            // this becomes user_id in db.
+          targetUserID: data.targetUserID + '', // this becomes other_user_id in db.
+          timeIssued: data.timeIssued + '',     // this becomes time_issued in db.
+          message: data.message,
+          read: data.read + '',
+          username: redisData.username
+        }
+
+        return MessagesModel.createMessageByIDAndTargetID(dbMessage)
+      })
+      .then((json) => {
+
+        // Nothing to do if the message is stored successfully.
       })
       .catch((json) => {
-        console.log('fromClientChatMessage redisInfoPromiseError')
         console.log(json)
       })
     })

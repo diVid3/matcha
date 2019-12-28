@@ -3,10 +3,28 @@ HTTP 400-MES:
   400-MES-1: Missing id.
   400-MES-2: id should be a string.
   400-MES-3: Malformed id.
+
   400-MES-4: Missing targetUserID.
   400-MES-5: targetUserID should be a string.
   400-MES-6: Malformed targetUserID.
 
+  400-MES-7: Missing timeIssued.
+  400-MES-8: timeIssued should be a string.
+  400-MES-9: Malformed timeIssued.
+
+  400-MES-10: Missing message.
+  400-MES-11: message should be a string.
+  400-MES-12: Malformed message.
+
+  400-MES-13: Missing read.
+  400-MES-14: read should be a string.
+  400-MES-15: Malformed read.
+
+  400-MES-16: Missing username.
+  400-MES-17: username should be a string.
+  400-MES-18: Malformed username.
+
 HTTP 500-MES:
 
   500-MES-1: DB getting message feed by user_id and targetID failed.
+  500-MES-2: DB inserting message by user_id and targetID failed.
