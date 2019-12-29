@@ -3,6 +3,7 @@ const SocketStore = require('./SocketStore')
 const {
   MessagesModel
 } = require('../models')
+const NotificationCommitter = require('./NotificationCommitter')
 
 class ConfigureSockets {
 
@@ -75,6 +76,23 @@ class ConfigureSockets {
       .catch((json) => {
         console.log(json)
       })
+    })
+  }
+
+  // Data:
+  //
+  // {
+  //   targetUsername: 'diVid3'
+  //   notification: 'You received a message',
+  //   read: '0',
+  //   origUsername: 'tomGun1911'
+  // }
+
+  static attachNotificationListeners(socket) {
+
+    socket.on('fromClientNotification', (data) => {
+
+      NotificationCommitter.commitNotification(data)
     })
   }
 }

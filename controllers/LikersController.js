@@ -4,6 +4,8 @@ const {
   UsersModel
 } = require('../models')
 
+const NotificationCommitter = require('../helpers/NotificationCommitter')
+
 class LikersController {
 
   static getLikersBySession(req, res) {
@@ -70,12 +72,18 @@ class LikersController {
 
       if (iLikeThem && theyLikeMe) {
 
-        // TODO:
         // If we both like eachother, it means that targetUsername's new liker entry sealed the deal. That in
         // turn means that I liked them 2nd, which means they liked me 1st. Which means that I need to send
         // them the notification of 'A liked user liked you back'
 
-        // { targetUsername: 'tomGun1911', notification: 'A liked user liked you back', read: '0' }
+        const clientNotification = {
+          targetUsername: theirUsername,
+          notification: 'A liked user liked you back',
+          read: '0',
+          origUsername: myUsername
+        }
+
+        NotificationCommitter.commitNotification(clientNotification)
 
         return FriendsModel.createFriendsByUsernames({
           id: req.body.id,

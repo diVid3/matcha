@@ -139,5 +139,6 @@ router.get('/api/v1.0/messages/friend/id/:targetUserID', MessagesController.getM
 // Notifications Resource
 router.get('/api/v1.0/notifications/session', NotificationsController.getNotificationsBySession)
 router.post('/api/v1.0/notifications/session', NotificationsController.createNotificationBySession)
+router.patch('/api/v1.0/notifications/username/:username', NotificationsController.patchNotificationByUsername)
 
 module.exports = router

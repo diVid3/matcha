@@ -22,19 +22,55 @@ class BlockedUsersValidator {
   
   static targetUserIDPresent(data, errors) {
     if (!data.targetUserID) {
-      errors.push({ code: '400-FRIEND-4', message: 'Missing targetUserID.' })
+      errors.push({ code: '400-BU-4', message: 'Missing targetUserID.' })
     }
   }
 
   static targetUserIDType(data, errors) {
     if (typeof data.targetUserID !== 'string') {
-      errors.push({ code: '400-FRIEND-5', message: 'targetUserID should be a string.' })
+      errors.push({ code: '400-BU-5', message: 'targetUserID should be a string.' })
     }
   }
 
   static targetUserIDRegex(data, errors) {
     if (typeof data.targetUserID === 'string' && !InputValidation.isValidID(data.targetUserID)) {
-      errors.push({ code: '400-FRIEND-6', message: 'Malformed targetUserID.' })
+      errors.push({ code: '400-BU-6', message: 'Malformed targetUserID.' })
+    }
+  }
+
+  static targetUsernamePresent(data, errors) {
+    if (!data.targetUsername) {
+      errors.push({ code: '400-BU-7', message: 'Missing targetUsername.' })
+    }
+  }
+
+  static targetUsernameType(data, errors) {
+    if (typeof data.targetUsername !== 'string') {
+      errors.push({ code: '400-BU-8', message: 'targetUsername should be a string.' })
+    }
+  }
+
+  static targetUsernameRegex(data, errors) {
+    if (typeof data.targetUsername === 'string' && !InputValidation.isValidName(data.targetUsername)) {
+      errors.push({ code: '400-BU-9', message: 'Malformed targetUsername.' })
+    }
+  }
+
+  static usernamePresent(data, errors) {
+    if (!data.username) {
+      errors.push({ code: '400-BU-10', message: 'Missing username.' })
+    }
+  }
+
+  static usernameType(data, errors) {
+    if (typeof data.username !== 'string') {
+      errors.push({ code: '400-BU-11', message: 'username should be a string.' })
+    }
+  }
+
+  static usernameRegex(data, errors) {
+    if (typeof data.username === 'string' && !InputValidation.isValidName(data.username)) {
+      errors.push({ code: '400-BU-12', message: 'Malformed username.' })
     }
   }
 
@@ -50,6 +86,20 @@ class BlockedUsersValidator {
     BlockedUsersValidator.IDPresent(data, errors)
     BlockedUsersValidator.IDType(data, errors)
     BlockedUsersValidator.IDRegex(data, errors)
+  }
+
+  static getOnlyTargetUsernameErrors(data, errors) {
+
+    BlockedUsersValidator.targetUsernamePresent(data, errors)
+    BlockedUsersValidator.targetUsernameType(data, errors)
+    BlockedUsersValidator.targetUsernameRegex(data, errors)
+  }
+
+  static getOnlyBlockedUsernameErrors(data, errors) {
+
+    BlockedUsersValidator.usernamePresent(data, errors)
+    BlockedUsersValidator.usernameType(data, errors)
+    BlockedUsersValidator.usernameRegex(data, errors)
   }
 }
 

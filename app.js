@@ -64,17 +64,17 @@ io.on('connection', (socket) => {
           }
 
           const data = JSON.parse(json)
+
+          ConfigureSockets.attachPresenceListeners(socket)
+          ConfigureSockets.attachMessageListeners(socket)
+          ConfigureSockets.attachNotificationListeners(socket)
   
           if (!SocketStore.getSocket(data.username)) {
-  
-            ConfigureSockets.attachPresenceListeners(socket)
-            ConfigureSockets.attachMessageListeners(socket)
+
             SocketStore.addEntry(data.username, cookieStr, socket)
           }
           else {
-  
-            ConfigureSockets.attachPresenceListeners(socket)
-            ConfigureSockets.attachMessageListeners(socket)
+
             SocketStore.updateSocket(cookieStr, socket)
           }
         })

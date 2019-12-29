@@ -21,10 +21,11 @@ class BlockedUsersController {
     })
   }
 
-  // requires { targetUserID }
+  // requires { targetUserID, targetUsername }
   static createBlockedUserBySession(req, res) {
 
     req.body.id = req.session.userId + ''
+    req.body.username = req.session.username
 
     BlockedUsersModel.createBlockedUserByID(req.body)
     .then((statusObj) => {

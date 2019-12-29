@@ -37,6 +37,21 @@ class NotificationsController {
       res.status(statusObj.statusCode || 500).json(statusObj.body || {})
     })
   }
+
+  static patchNotificationByUsername(req, res) {
+
+    const username = req.params.username
+
+    NotificationsModel.patchNotificationByUsername(req.body, username)
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
 }
 
 module.exports = NotificationsController

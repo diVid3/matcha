@@ -101,6 +101,27 @@ class NotificationsValidator {
     NotificationsValidator.usernameType(data, errors)
     NotificationsValidator.usernameRegex(data, errors)
   }
+
+  static getPatchNotificationByUsernameErrors(data, errors) {
+
+    if (data.username) {
+
+      NotificationsValidator.usernameType(data, errors)
+      NotificationsValidator.usernameRegex(data, errors)
+    }
+
+    if (data.notification) {
+
+      NotificationsValidator.notificationType(data, errors)
+      NotificationsValidator.notificationRegex(data, errors)
+    }
+
+    if (data.read) {
+
+      NotificationsValidator.readType(data, errors)
+      NotificationsValidator.readRegex(data, errors)
+    }
+  }
 }
 
 module.exports = NotificationsValidator
