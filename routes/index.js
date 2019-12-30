@@ -56,6 +56,7 @@ router.get('/api/v1.0/logged-in', AuthenticationController.isLoggedIn)
 // Users resource
 router.get('/api/v1.0/users/session/own-username', UsersController.getSessionUsername)
 router.get('/api/v1.0/users', UsersController.getAllUsers)
+router.get('/api/v1.0/users/tags', UsersController.getAllUsersAndTags)
 router.post('/api/v1.0/users', UsersController.createUser)
 
 router.get('/api/v1.0/users/session', UsersController.getUserBySession)

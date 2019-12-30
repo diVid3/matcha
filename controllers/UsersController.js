@@ -16,7 +16,28 @@ class UsersController {
 
   static getAllUsers(req, res) {
 
+    UsersModel.getAllUsers()
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+  }
 
+  static getAllUsersAndTags(req, res) {
+
+    UsersModel.getAllUsersAndTags()
+    .then((statusObj) => {
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
+    .catch((statusObj) => {
+      console.log(statusObj)
+      statusObj.body && statusObj.body.errors && console.log(statusObj.body.errors)
+      res.status(statusObj.statusCode || 500).json(statusObj.body || {})
+    })
   }
 
   static isLoggedIn(req, res) {

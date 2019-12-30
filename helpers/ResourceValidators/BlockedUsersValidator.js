@@ -1,7 +1,7 @@
 const InputValidation = require('../InputValidation')
 
 class BlockedUsersValidator {
-  
+
   static IDPresent(data, errors) {
     if (!data.id) {
       errors.push({ code: '400-BU-1', message: 'Missing id.' })

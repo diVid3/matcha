@@ -88,7 +88,50 @@ class UsersModel {
 
   static getAllUsers() {
 
+    return new Promise((res, rej) => {
 
+      const body = {}
+      const errors = []
+
+      const con = SQLCon.getCon()
+      const sql = 'SELECT * FROM `matcha`.`users`;'
+
+      con.query(sql, (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-USER-16', message: 'DB getting all users failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
+  }
+
+  static getAllUsersAndTags() {
+
+    return new Promise((res, rej) => {
+
+      const body = {}
+      const errors = []
+
+      const con = SQLCon.getCon()
+      const sql = 'SELECT * FROM `matcha`.`users` LEFT JOIN `matcha`.`tags` ON `users`.`user_id` = `tags`.`user_id`;'
+
+      con.query(sql, (err, rows, fields) => {
+
+        if (err) {
+          errors.push({ code: '500-USER-17', message: 'DB getting all users and tags failed.' })
+          body.errors = errors
+          return rej({ statusCode: 500, body })
+        }
+
+        body.rows = rows
+        res({ statusCode: 200, body })
+      })
+    })
   }
 
   static getUserByID() {
