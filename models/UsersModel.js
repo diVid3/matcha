@@ -118,7 +118,12 @@ class UsersModel {
       const errors = []
 
       const con = SQLCon.getCon()
-      const sql = 'SELECT * FROM `matcha`.`users` LEFT JOIN `matcha`.`tags` ON `users`.`user_id` = `tags`.`user_id`;'
+      const sql = 'SELECT `users`.`user_id`, `users`.`first_name`, `users`.`last_name`, `users`.`gender`, ' +
+      '`users`.`username`, `users`.`fame_rating`, `users`.`latitude`, `users`.`longitude`, `users`.`age`, ' +
+      '`users`.`profile_pic_path`, `users`.`sex_pref`, `tags`.`tag` ' +
+      'FROM `matcha`.`users` ' +
+      'LEFT JOIN `matcha`.`tags` ' +
+      'ON `users`.`user_id` = `tags`.`user_id`;'
 
       con.query(sql, (err, rows, fields) => {
 
