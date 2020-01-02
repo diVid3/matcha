@@ -33,6 +33,11 @@ class AuthenticationController {
         return res.status(200).json({ status: false, message: 'Invalid credentials.' })
       }
 
+      if (statusObj.body.rows[0].verified === 0) {
+
+        return res.status(200).json({ status: false, message: 'Account not verified.' })
+      }
+
       const userPassword = statusObj.body.rows[0].password
 
       if (!bcrypt.compareSync(req.body.password, userPassword)) {
