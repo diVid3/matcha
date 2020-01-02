@@ -41,7 +41,7 @@ class PicturesController {
   static storeProfilePictureBySession(req, res) {
 
     if (req.MulterFileValidationError) {
-      res.status(400).json({
+      return res.status(400).json({
         errors: [{ code: '400-PIC-4', message: 'Incorrect image type, accepted formats: jpeg, png.' }]
       })
     }
@@ -62,7 +62,7 @@ class PicturesController {
   static storePictureBySession(req, res) {
 
     if (req.MulterFileValidationError) {
-      res.status(400).json({
+      return res.status(400).json({
         errors: [{ code: '400-PIC-4', message: 'Incorrect image type, accepted formats: jpeg, png.' }]
       })
     }

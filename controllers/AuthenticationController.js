@@ -129,6 +129,7 @@ class AuthenticationController {
     }, (err, info) => {
 
       if (err) {
+        console.log(err)
         errors.push({ code: '500-SEND-REG-EMAIL-1', message: 'Nodemailer couldn\'t send registration email.' })
         body.errors = errors
         return res.status(500).json(body)

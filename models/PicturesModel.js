@@ -2,6 +2,9 @@ const SQLCon = require('../config/SQLCon')
 const path = require('path')
 const fs = require('fs')
 
+const readChunk = require('read-chunk');
+const imageType = require('image-type');
+
 const {
   PicturesValidator
 } = require('../helpers/ResourceValidators')
@@ -99,6 +102,29 @@ class PicturesModel {
       
       data.picPath = PicturesModel.getPicPath(files)
 
+      // Directly testing file to check for valid filetype
+      const buffer = readChunk.sync(data.picPath, 0, 12);
+      const imageTypeObj = imageType(buffer)
+
+      if (
+        !imageTypeObj ||
+        !(
+          imageTypeObj.ext === 'jpg' ||
+          imageTypeObj.ext === 'jpeg' ||
+          imageTypeObj.ext === 'png'
+        )
+      ) {
+
+        const pathToUnlink = path.join(__dirname, `../${data.picPath}`)
+
+        if (fs.existsSync(pathToUnlink)) {
+          fs.unlinkSync(pathToUnlink)
+        }
+
+        body.errors = [{ code: '400-PIC-4', message: 'Incorrect image type, accepted formats: jpeg, png.' }]
+        return rej({ statusCode: 400, body })
+      }
+
       PicturesValidator.getOnlyPicIDErrors(data, errors)
 
       if (errors.length) {
@@ -161,6 +187,29 @@ class PicturesModel {
       const errors = []
       
       data.picPath = file.path
+
+      // Directly testing file to check for valid filetype
+      const buffer = readChunk.sync(data.picPath, 0, 12);
+      const imageTypeObj = imageType(buffer)
+
+      if (
+        !imageTypeObj ||
+        !(
+          imageTypeObj.ext === 'jpg' ||
+          imageTypeObj.ext === 'jpeg' ||
+          imageTypeObj.ext === 'png'
+        )
+      ) {
+
+        const pathToUnlink = path.join(__dirname, `../${data.picPath}`)
+
+        if (fs.existsSync(pathToUnlink)) {
+          fs.unlinkSync(pathToUnlink)
+        }
+
+        body.errors = [{ code: '400-PIC-4', message: 'Incorrect image type, accepted formats: jpeg, png.' }]
+        return rej({ statusCode: 400, body })
+      }
 
       PicturesValidator.getOnlyPicIDErrors(data, errors)
 
