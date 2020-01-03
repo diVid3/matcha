@@ -118,7 +118,7 @@ class UsersModel {
       const errors = []
 
       const con = SQLCon.getCon()
-      const sql = 'SELECT `users`.`user_id`, `users`.`first_name`, `users`.`last_name`, `users`.`gender`, ' +
+      const sql = 'SELECT `users`.`user_id`, `users`.`first_name`, `users`.`last_name`, `users`.`gender`, `users`.`biography`, ' +
       '`users`.`username`, `users`.`fame_rating`, `users`.`latitude`, `users`.`longitude`, `users`.`age`, ' +
       '`users`.`profile_pic_path`, `users`.`sex_pref`, `tags`.`tag` ' +
       'FROM `matcha`.`users` ' +
