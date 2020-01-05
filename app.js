@@ -65,6 +65,11 @@ io.on('connection', (socket) => {
 
           const data = JSON.parse(json)
 
+          if (!data) {
+            
+            return
+          }
+
           ConfigureSockets.attachPresenceListeners(socket)
           ConfigureSockets.attachMessageListeners(socket)
           ConfigureSockets.attachNotificationListeners(socket)
