@@ -24,6 +24,10 @@ class InputValidation {
     return /^\w{1,45}$/.test(name)
   }
 
+  static isValidLastName(lastName) {
+    return /^[\w\s]{1,45}$/.test(lastName)
+  }
+
   static isValidGender(gender) {
     return /^[012]$/.test(gender)
   }

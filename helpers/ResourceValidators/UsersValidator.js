@@ -33,7 +33,7 @@ class UsersValidator {
   }
 
   static lastNameRegex(data, errors) {
-    if (typeof data.lastName === 'string' && !InputValidation.isValidName(data.lastName)) {
+    if (typeof data.lastName === 'string' && !InputValidation.isValidLastName(data.lastName)) {
       errors.push({ code: '400-USER-16', message: 'Malformed lastName.' })
     }
   }
