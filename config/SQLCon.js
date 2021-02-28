@@ -2,9 +2,9 @@ const mysql = require('mysql')
 
 // Private Singleton.
 const con = mysql.createConnection({
-  host: 'matcha.cfsc0xmh8tva.eu-west-2.rds.amazonaws.com',
-  user: 'admin',
-  password: '#Fadora123',
+  host: '',
+  user: '',
+  password: '',
   multipleStatements: true
 })
 
